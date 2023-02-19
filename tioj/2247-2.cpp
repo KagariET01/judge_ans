@@ -1,6 +1,5 @@
 /*
 [tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/2247
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=h558
 [AC]
 */
 
