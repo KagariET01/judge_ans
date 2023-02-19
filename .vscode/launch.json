@@ -5,7 +5,7 @@
 			"name": "c++",
 			"type": "cppvsdbg",
 			"request": "launch",
-			"program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+			"program": "${workspaceFolder}\\run.exe",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${fileDirname}",
