@@ -52,7 +52,7 @@ using namespace std;
 bool debug=0;
 bool iofast=true;
 
-const INT mxn=1005
+const INT mxn=1005;
 
 INT t[mxn+1];
 INT tadd[mxn+2];
@@ -81,7 +81,7 @@ if(nw.FIR-d[nw.SEC]>0){//如果這次掃完後還有灰塵可以掃就推回去
 que.insert({nw.FIR-d[nw.SEC],nw.SEC});
 }
 }
-return ans;
+return re;
 }
 
 
