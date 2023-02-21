@@ -54,7 +54,7 @@ bool iofast=true;
 
 const INT mxn=1005;
 
-INT t[mxn+1];
+INT tt[mxn+1];
 INT tadd[mxn+2];
 INT s[mxn+1];
 INT d[mxn+1];
@@ -69,7 +69,7 @@ template<typename TPE>TPE reader(){
 INT solve(INT id,INT t){
 	priority_queue<PII> que;//使用priority queue維護房間目前的灰塵數量
 	for(INT i=1;i<=id;i++){
-		que.insert({s[i],i});
+		que.push({s[i],i});
 	}
 INT re=0;
 for(INT i=0;i<t;i++){
@@ -78,7 +78,7 @@ PII nw=que.top();
 que.pop();
 re+=nw.FIR;
 if(nw.FIR-d[nw.SEC]>0){//如果這次掃完後還有灰塵可以掃就推回去
-que.insert({nw.FIR-d[nw.SEC],nw.SEC});
+que.push({nw.FIR-d[nw.SEC],nw.SEC});
 }
 }
 return re;
@@ -95,14 +95,15 @@ int main(){
 	while(t--){
 		/*CIN*/
 		INT n=read(INT),m=read(INT);
-
+/*
 set0(t);
 set0(tadd);
 set0(s);
 set0(d);
-for(INT i=2;i<=n;i++{
-cin>>t[i];
-tadd[i]=tadd[i-1]+t[i];
+*/
+for(INT i=2;i<=n;i++){
+cin>>tt[i];
+tadd[i]=tadd[i-1]+tt[i];
 }
 for(INT i=1;i<=n;i++){
 cin>>s[i];
@@ -113,7 +114,7 @@ cin>>d[i];
 		/*solve*/
 INT ans=0;
 for(INT i=1;i<=n;i++){
-ans=max(ans,solve(i,m-tadd[i]);
+ans=max(ans,solve(i,m-tadd[i]));
 }
 cout<<ans<<endl;
 
