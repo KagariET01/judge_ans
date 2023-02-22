@@ -82,28 +82,24 @@ def checkans(a):
 
 a = ""
 alls=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-for i in alls:
-	a=i
-	if(checkans(a)>95):
-		print(a)
-		exit()
 
-for i in alls:
-	for j in alls:
-		a=i+j
-		if(checkans(a)>95):
-			print(a)
-			exit()
-
-
-for i in alls:
-	for j in alls:
-		for k in alls:
-			a=i+j+k
+def solve(lst=0,nw=""):
+	for i in alls:
+		a=nw+i
+		if(lst):
+			return solve(lst-1,a)
+		else:
 			if(checkans(a)>95):
 				print(a)
+				return True
 				exit()
 
+nwlst=0
+
+while(True):
+	if(solve(nwlst)):
+		break
+	nwlst+=1
 
 
 
