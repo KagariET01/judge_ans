@@ -1,10 +1,5 @@
 /*
-[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/ [ID]
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid= [ID]
-[cses]			[Q]https://cses.fi/problemset/task/ [ID]
-[AtCoder]		[Q]https://atcoder.jp/contests/ [ID] /tasks/ [ID] _ [PID]
-[CF]				[Q]
-[ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
+[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=b115
 []
 */
 
@@ -93,12 +88,18 @@ struct bignum{
 
 bignum operator*(const bignum &a,const bignum &b){
 	bignum re;
+	re.sz=a.sz+b.sz;
+	re.vec.resize(re.sz);
 	for(INT i=0;i<a.sz;i++){
 		if(a.vec[i]==0)continue;
 		for(INT j=0;j<b.sz;j++){
-
+			re.vec[i+j]+=a.vec[i]*i+b.vec[i]*j;
 		}
 	}
+	return re;
+}
+bignum operator/(const bignum &a,const bignum &b){
+
 }
 
 
