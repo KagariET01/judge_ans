@@ -73,36 +73,25 @@ INT tt[mxn+1];
 INT tadd[mxn+2];
 INT s[mxn+1];
 INT d[mxn+1];
+INT n,m;
+INT dmx=0;
 
-
-
-
-
-
-bool vser(INT n,INT nw){
-
-}
-
-template<typename TPE,typename TPE2,typename Fn>TPE Bit_Search(TPE l,TPE r,TPE2 n,Fn isit){
-	if(isit(n,l))return l;
-	while(r-l>1){
-		TPE nw=l+(r-l)/2;
-		if(isit(n,nw)){
-			r=nw;
-		}else{
-			l=nw;
+INT realscore(INT e,INT x,INT tt){
+	INT re=0;
+	INT mx=0;
+	for(INT i=1;i<=e;i++){
+		if(d[i]==0){
+			mx=max(mx,s[i]);
+			continue;
 		}
+		INT a=s[i]-x;
+		INT t=a/d[i];
+		INT mn=s[i]-d[i]*(t-1);
+		re+=(s[i]+mn)*t/2;
+		tt-=t;
 	}
-	return r;
+	return re+tt*mx;
 }
-
-
-
-
-
-
-
-
 
 
 PII dust_to_time(int e, int x) {//e代表考慮的房間數量,x代表一常數,此函數會回傳有多少時間可以掃到>x的灰塵(FIR),以及有多少時間可以掃到=x的灰塵(SEC)
@@ -123,6 +112,36 @@ PII dust_to_time(int e, int x) {//e代表考慮的房間數量,x代表一常數,
 }
 
 
+INT solve(){
+	INT re=0;
+	for(INT i=1;i<=n;i++){
+		INT l=0,r=dmx;
+		INT k=m-tadd[i];
+		while(l<r){
+			INT nw=l+(r-l)/2;
+			PII ab=dust_to_time(i,nw);
+			if(ab.FIR+ab.SEC>=k){
+				l=nw+1;
+			}else{
+				r=nw;
+			}
+		}
+		re=max(re,realscore(i,r,k));
+	}
+	return re;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -133,12 +152,23 @@ PII dust_to_time(int e, int x) {//e代表考慮的房間數量,x代表一常數,
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	INT t=read(INT);
+	INT t=1;
 	while(t--){
 		/*CIN*/
-		INT n=read(INT);
-		cout<<n<<endl;
+		cin>>n>>m;
+		for(INT i=2;i<=n;i++){
+			cin>>tt[i];
+			tadd[i]=tadd[i-1]+tt[i];
+		}
+		for(INT i=1;i<=n;i++){
+			cin>>s[i];
+		}
+		for(INT i=1;i<=n;i++){
+			cin>>d[i];
+			dmx=max(dmx,d[i]);
+		}
 		/*solve*/
+		cout<<solve()<<endl;
 	}
 	return 0;
 }

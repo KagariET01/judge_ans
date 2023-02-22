@@ -1,6 +1,6 @@
 /*
-[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/2194
-[]
+[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=b229
+[AC]
 */
 
 
@@ -51,14 +51,10 @@ using namespace std;
 /*num*/
 bool debug=0;
 bool iofast=true;
-
-const INT mxn=1005;
-
-INT tt[mxn+1];
-INT tadd[mxn+2];
-INT s[mxn+1];
-INT d[mxn+1];
-
+PII mv[]={{0,1},{1,0},{0,-1},{-1,0}};
+INT mx[]={0,1,0,-1};
+INT my[]={1,0,-1,0};
+INT mod=988244353;
 /*fn定義*/
 template<typename TPE>TPE reader(){
 	TPE a;
@@ -66,23 +62,7 @@ template<typename TPE>TPE reader(){
 	return a;
 }
 
-INT solve(INT id,INT t){
-	priority_queue<PII> que;//使用priority queue維護房間目前的灰塵數量
-	for(INT i=1;i<=id;i++){
-		que.push({s[i],i});
-	}
-INT re=0;
-for(INT i=0;i<t;i++){
-if(que.empty())break;//沒東西掃就滾
-PII nw=que.top();
-que.pop();
-re+=nw.FIR;
-if(nw.FIR-d[nw.SEC]>0){//如果這次掃完後還有灰塵可以掃就推回去
-que.push({nw.FIR-d[nw.SEC],nw.SEC});
-}
-}
-return re;
-}
+
 
 
 
@@ -91,35 +71,16 @@ return re;
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	INT t=1;
-	while(t--){
-		/*CIN*/
-		INT n=read(INT),m=read(INT);
-		/*
-		set0(t);
-		set0(tadd);
-		set0(s);
-		set0(d);
-		*/
-		for(INT i=2;i<=n;i++){
-			cin>>tt[i];
-			tadd[i]=tadd[i-1]+tt[i];
-		}
-		for(INT i=1;i<=n;i++){
-			cin>>s[i];
-		}
-		for(INT i=1;i<=n;i++){
-			cin>>d[i];
-		}
-				/*solve*/
-		INT ans=0;
-		for(INT i=1;i<=n;i++){
-			ans=max(ans,solve(i,m-tadd[i]));
-		}
-		cout<<ans<<endl;
-
-
-		
+	UINT dp[60][2];
+	set0(dp);
+	dp[1][0]=dp[1][1]=1;
+	for(INT i=2;i<=55;i++){
+		dp[i][0]=dp[i-1][1]*2+dp[i-1][0];
+		dp[i][1]=dp[i-1][1]+dp[i-1][0];
+	}
+	INT n;
+	while(cin>>n){
+		cout<<dp[n][0]+dp[n][1]*2<<endl<<endl;
 	}
 	return 0;
 }
