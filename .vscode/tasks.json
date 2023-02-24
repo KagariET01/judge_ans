@@ -2,17 +2,13 @@
   "tasks": [
     {
       "type": "cppbuild",
-      "label": "C/C++: g++.exe 建置使用中檔案",
-      "command": "C:\\TDM-GCC-64\\bin\\g++.exe",
+      "label": "C/C++: cpp.exe 建置使用中檔案",
+      "command": "g++",
       "args": [
-        "-fdiagnostics-color=always",
-        "-g",
-        "${file}",
         "-o",
-        "${workspaceFolder}\\run.exe"
+        "${workspaceFolder}\\run.exe",
+        "${file}"
       ],
-      "options": {
-      },
       "problemMatcher": [
         "$gcc"
       ],
@@ -20,7 +16,6 @@
         "kind": "build",
         "isDefault": true
       },
-      "detail": "偵錯工具產生的工作。"
     }
   ],
   "version": "2.0.0"

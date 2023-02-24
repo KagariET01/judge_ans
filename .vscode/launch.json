@@ -5,25 +5,27 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "g++ debug",
+			"name": "(gdb) Windows 啟動上的 Bash",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}\\run.exe",
+			"program": "${workspaceFolderBasename}\\run.exe",
 			"args": [],
 			"stopAtEntry": false,
-			"cwd": "${fileDirname}",
+			"cwd": "${workspaceFolderBasename}",
 			"environment": [],
 			"externalConsole": false,
-			"MIMode": "gdb",
-			"miDebuggerPath": "C:\\msys64\\mingw64\\bin\\gdb.exe",
-			/*"setupCommands": [
-				{
-					"description": "啟用 gdb 的美化顯示",
-					"text": "-enable-pretty-printing",
-					"ignoreFailures": true
-				}
-			],*/
-			"preLaunchTask": "C/C++: g++.exe 建置使用中檔案"
+			"setupCommands": [
+					{
+							"description": "啟用 gdb 的美化顯示",
+							"text": "-enable-pretty-printing",
+							"ignoreFailures": true
+					},
+					{
+							"description": "將反組譯碼變體設為 Intel",
+							"text": "-gdb-set disassembly-flavor intel",
+							"ignoreFailures": true
+					}
+			]
 		}
 
 	]
