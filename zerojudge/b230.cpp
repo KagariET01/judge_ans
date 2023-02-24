@@ -1,5 +1,5 @@
 /*
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=b229
+[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=b230
 [AC]
 */
 
@@ -71,16 +71,12 @@ template<typename TPE>TPE reader(){
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	UINT dp[60][2];
-	set0(dp);
-	dp[1][0]=dp[1][1]=1;
-	for(INT i=2;i<=55;i++){
-		dp[i][0]=dp[i-1][1]*2+dp[i-1][0];
-		dp[i][1]=dp[i-1][1]+dp[i-1][0];
-	}
-	INT n;
-	while(cin>>n){
-		cout<<dp[n][0]+dp[n][1]*2<<endl<<endl;
+	INT ans[]={0,1,2,3,4,5,6,7,8,9,10,12,13,15,16,18,21,22,24,25,28,30,33,37,40,42,45,48,57,58,60,70,72,78,85,88,93,102,105,112,120,130,133,165,168,177,190,210,232,240,253,273,280,312,330,345,357,385,408,462,520,760,840,1320,1365,1848};
+	INT inin;
+	while(cin>>inin){
+		/*CIN*/
+		cout<<ans[inin]<<endl<<endl;
+		/*solve*/
 	}
 	return 0;
 }

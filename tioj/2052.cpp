@@ -1,6 +1,6 @@
 /*
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=b229
-[AC]
+[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/2052
+[40/100 TLE]
 */
 
 
@@ -71,16 +71,22 @@ template<typename TPE>TPE reader(){
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	UINT dp[60][2];
-	set0(dp);
-	dp[1][0]=dp[1][1]=1;
-	for(INT i=2;i<=55;i++){
-		dp[i][0]=dp[i-1][1]*2+dp[i-1][0];
-		dp[i][1]=dp[i-1][1]+dp[i-1][0];
-	}
-	INT n;
-	while(cin>>n){
-		cout<<dp[n][0]+dp[n][1]*2<<endl<<endl;
+	INT t=1;
+	while(t--){
+		/*CIN*/
+		mod=read(INT);
+		string s;
+		cin>>s;
+		/*solve*/
+		string ssort=s;
+		sort(ssort.begin(),ssort.end());
+		INT ans=-1;
+		do{
+			ans++;
+			ans%=mod;
+			if(ssort==s)break;
+		}while(next_permutation(ssort.begin(),ssort.end()));
+		cout<<ans<<endl;
 	}
 	return 0;
 }

@@ -1,6 +1,11 @@
 /*
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=b229
-[AC]
+[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/ [ID]
+[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid= [ID]
+[cses]			[Q]https://cses.fi/problemset/task/ [ID]
+[AtCoder]		[Q]https://atcoder.jp/contests/ [ID] /tasks/ [ID] _ [PID]
+[CF]				[Q]
+[ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
+[]
 */
 
 
@@ -50,11 +55,10 @@ using namespace std;
 #define ADloop(i,s,n,ad) for(i=s;i<n;i+=ad)
 /*num*/
 bool debug=0;
-bool iofast=true;
-PII mv[]={{0,1},{1,0},{0,-1},{-1,0}};
-INT mx[]={0,1,0,-1};
-INT my[]={1,0,-1,0};
-INT mod=988244353;
+bool iofast=1;
+INT mx[]={0,0,1,1,1,-1,-1,-1};
+INT my[]={1,-1,0,1,-1,0,1,-1};
+INT outer[]={0,1,2,3,3,4,4,5,5,5,5,6,6,7,7,8,8,9,9,10,10};
 /*fn定義*/
 template<typename TPE>TPE reader(){
 	TPE a;
@@ -62,8 +66,24 @@ template<typename TPE>TPE reader(){
 	return a;
 }
 
+const INT maxmn=520;
+bool mp[maxmn+2][maxmn+2];
+INT mpans[maxmn+2][maxmn+2];
+INT ans=0;
+INT m,n;
+INT cost[11] = {0, 1, 2, 4, 6, 10, 12, 14, 16, 18, 20};
 
-
+INT solve(INT x,INT y){
+	if(x<0 || x>=m || y<0 || y>=n)return 0;
+	if(mp[x][y]==0)return 0;
+	if(mp[x][y]){
+		mp[x][y]=false;
+		for(INT i=0;i<8;i++){
+			solve(x+mx[i],y+my[i]);
+		}
+		return 1;
+	}
+}
 
 
 
@@ -71,16 +91,29 @@ template<typename TPE>TPE reader(){
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	UINT dp[60][2];
-	set0(dp);
-	dp[1][0]=dp[1][1]=1;
-	for(INT i=2;i<=55;i++){
-		dp[i][0]=dp[i-1][1]*2+dp[i-1][0];
-		dp[i][1]=dp[i-1][1]+dp[i-1][0];
-	}
-	INT n;
-	while(cin>>n){
-		cout<<dp[n][0]+dp[n][1]*2<<endl<<endl;
+	INT t=1;
+	while(cin>>m>>n){
+		/*CIN*/
+		
+		for(INT i=0;i<m;i++){
+			string s=read(string);
+			for(INT j=0;j<n;j++){
+				mp[i][j]=s[j]-'0';
+			}
+		}
+		/*solve*/
+		for(INT i=0;i<m;i++){
+			for(INT j=0;j<n;j++){
+				ans+=solve(i,j);
+			}
+		}
+		if(ans>cost[10]){cout<<"10\n";return 0;}
+		for(INT i=0;i<=10;i++){
+			if(ans<=cost[i]){
+				cout<<i<<endl;
+				break;
+			}
+		}
 	}
 	return 0;
 }

@@ -1,6 +1,6 @@
 /*
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=b229
-[AC]
+[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=b115
+[]
 */
 
 
@@ -61,8 +61,46 @@ template<typename TPE>TPE reader(){
 	cin>>a;
 	return a;
 }
+struct bignum{
+	vector<INT> vec;
+	string s="";
+	INT sz=0;
+	void build(){
+		vec.clear();
+		sz=s.size();
+		vec.resize(sz);
+		for(INT i=0;i<sz;i++){
+			vec[i]=s[i]-'0';
+		}
+	}
+	INT size(){
+		return sz;
+	}
+	void inin(){
+		sz=vec.size()+1;
+		vec.resize(sz);
+		for(INT i=0;i<sz;i++){
+			vec[i+1]+=vec[i]/10;
+			vec[i]%=10;
+		}
+	}
+};
 
+bignum operator*(const bignum &a,const bignum &b){
+	bignum re;
+	re.sz=a.sz+b.sz;
+	re.vec.resize(re.sz);
+	for(INT i=0;i<a.sz;i++){
+		if(a.vec[i]==0)continue;
+		for(INT j=0;j<b.sz;j++){
+			re.vec[i+j]+=a.vec[i]*i+b.vec[i]*j;
+		}
+	}
+	return re;
+}
+bignum operator/(const bignum &a,const bignum &b){
 
+}
 
 
 
@@ -71,16 +109,11 @@ template<typename TPE>TPE reader(){
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	UINT dp[60][2];
-	set0(dp);
-	dp[1][0]=dp[1][1]=1;
-	for(INT i=2;i<=55;i++){
-		dp[i][0]=dp[i-1][1]*2+dp[i-1][0];
-		dp[i][1]=dp[i-1][1]+dp[i-1][0];
-	}
-	INT n;
-	while(cin>>n){
-		cout<<dp[n][0]+dp[n][1]*2<<endl<<endl;
+	string sa;
+	while(cin>>sa){
+
+		/*CIN*/
+		/*solve*/
 	}
 	return 0;
 }

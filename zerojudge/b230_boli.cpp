@@ -1,6 +1,11 @@
 /*
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=b229
-[AC]
+[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/ [ID]
+[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid= [ID]
+[cses]			[Q]https://cses.fi/problemset/task/ [ID]
+[AtCoder]		[Q]https://atcoder.jp/contests/ [ID] /tasks/ [ID] _ [PID]
+[CF]				[Q]
+[ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
+[]
 */
 
 
@@ -71,16 +76,25 @@ template<typename TPE>TPE reader(){
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	UINT dp[60][2];
-	set0(dp);
-	dp[1][0]=dp[1][1]=1;
-	for(INT i=2;i<=55;i++){
-		dp[i][0]=dp[i-1][1]*2+dp[i-1][0];
-		dp[i][1]=dp[i-1][1]+dp[i-1][0];
+	INT mx=10000;
+	bool isit[mx*mx*4];
+	set0(isit);
+	loop(a,1,mx+1)
+	loop(b,a+1,mx+1)
+	loop(c,b+1,mx+1){
+		isit[a*b+b*c+c*a]=true;
 	}
-	INT n;
-	while(cin>>n){
-		cout<<dp[n][0]+dp[n][1]*2<<endl<<endl;
+	INT edl=25;
+	INT countedl=0;
+	INT stop=70;
+	for(INT i=0;i<mx*mx;i++){
+		if(!isit[i]){
+			cout<<i<<",";
+			stop--;
+			countedl++;
+			if(countedl==0)cout<<endl;
+			if(stop==0)return 0;
+		}
 	}
 	return 0;
 }

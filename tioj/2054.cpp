@@ -1,5 +1,6 @@
 /*
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=b229
+[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/2054
+[雙指標]
 [AC]
 */
 
@@ -62,7 +63,11 @@ template<typename TPE>TPE reader(){
 	return a;
 }
 
+bool vser(PII a,PII b){
+	return a.FIR<b.FIR;
+}
 
+vector<PII>vec;
 
 
 
@@ -71,16 +76,41 @@ template<typename TPE>TPE reader(){
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	UINT dp[60][2];
-	set0(dp);
-	dp[1][0]=dp[1][1]=1;
-	for(INT i=2;i<=55;i++){
-		dp[i][0]=dp[i-1][1]*2+dp[i-1][0];
-		dp[i][1]=dp[i-1][1]+dp[i-1][0];
-	}
-	INT n;
-	while(cin>>n){
-		cout<<dp[n][0]+dp[n][1]*2<<endl<<endl;
+	INT t=1;
+	while(t--){
+		/*CIN*/
+		INT n=read(INT);
+		INT l,w;
+		cin>>l>>w;
+		vec.resize(n);
+		for(INT i=0;i<n;i++){
+			vec[i]={read(INT),read(INT)};
+		}
+		/*solve*/
+		INT ans=0;
+		sort(vec.begin(),vec.end(),vser);
+		INT lx=0;
+		for(INT rx=0;rx<n;rx++){//第一個雙指標
+			while(vec[rx].FIR-vec[lx].FIR>w){
+				lx++;
+			}
+			//第二個雙指標st
+			vector<INT> yvec;
+			yvec.clear();
+			for(INT i=lx;i<=rx;i++){
+				yvec.push_back(vec[i].SEC);
+			}
+			sort(yvec.begin(),yvec.end());
+			INT ly=0;
+			for(INT ry=0;ry<yvec.size();ry++){
+				while(yvec[ry]-yvec[ly]>l){
+					ly++;
+				}
+				ans=max(ans,ry-ly+1);
+			}
+			//第二個雙指標ed
+		}
+		cout<<ans<<endl;
 	}
 	return 0;
 }
@@ -92,5 +122,10 @@ int main(){
 
 /*think*/
 /*
+農兩個雙指標
+第一個雙指標在最一開始就建立
+該雙指標代表選取框的x座標
 
+框好之後建第二個雙指標
+異曲同工，這次是代表y座標的
 */
