@@ -2,28 +2,8 @@
   "tasks": [
     {
       "type": "cppbuild",
-      "label": "C/C++: gdb.exe 建置使用中檔案",
-      "command": "C:\\msys64\\mingw64\\bin\\gdb.exe",
-      "args": [
-        "-fdiagnostics-color=always",
-        "-g",
-        "${file}",
-        "-o",
-        "${workspaceFolder}\\run.exe"
-      ],
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "problemMatcher": [
-        "$gcc"
-      ],
-      "group": "build",
-      "detail": "偵錯工具產生的工作。"
-    },
-    {
-      "type": "cppbuild",
       "label": "C/C++: g++.exe 建置使用中檔案",
-      "command": "C:\\msys64\\mingw64\\bin\\g++.exe",
+      "command": "C:\\TDM-GCC-64\\bin\\g++.exe",
       "args": [
         "-fdiagnostics-color=always",
         "-g",
@@ -32,7 +12,6 @@
         "${workspaceFolder}\\run.exe"
       ],
       "options": {
-        "cwd": "${workspaceFolder}"
       },
       "problemMatcher": [
         "$gcc"
