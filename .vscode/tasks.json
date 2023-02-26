@@ -1,16 +1,14 @@
 {
 	"tasks": [
-		/*
 		{
 			"type": "cppbuild",
-			"label": "C/C++: g++.exe 建置使用中檔案",
-			"command": "C:\\TDM-GCC-64\\bin\\g++.exe",
+			"label": "dbg this cpp file",
+			"command": "g++",
 			"args": [
-				"-fdiagnostics-color=always",
-				"-g",
-				"${file}",
 				"-o",
-				"${workspaceFolder}\\run.exe"
+				"${workspaceFolder}\\run.exe",
+				"${file}",
+				"-g"
 			],
 			"options": {
 			},
@@ -22,7 +20,7 @@
 				"isDefault": true
 			},
 			"detail": "偵錯工具產生的工作。"
-		}*/
+		},
 		{
 			"type": "cppbuild",
 			"label": "build this cpp file",
@@ -31,7 +29,6 @@
 				"-o",
 				"${workspaceFolder}\\run.exe",
 				"${file}",
-				"-g"
 			],
 			"options": {
 			},
