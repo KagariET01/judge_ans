@@ -56,13 +56,16 @@ using namespace std;
 /*num*/
 bool debug=0;
 bool iofast=true;
+PII mv[]={{0,1},{1,0},{0,-1},{-1,0}};
+INT mx[]={0,1,0,-1};
+INT my[]={1,0,-1,0};
+INT mod=988244353;
 /*fn定義*/
 template<typename TPE>TPE reader(){
 	TPE a;
 	cin>>a;
 	return a;
 }
-	string s;
 
 
 
@@ -73,28 +76,31 @@ template<typename TPE>TPE reader(){
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	INT t=1;
+	INT t=read(INT);
+	INT n=read(INT);
 	while(t--){
-		cin>>s;
 		/*CIN*/
-		/*solve*/
-		INT nwnum=0;
-		for(char c:s){
-			if('0'<=c&& c<='9'){
-				nwnum*=10;
-				nwnum+=c-'0';
-			}
-			else{
-				if(nwnum==0)nwnum=1;
-				//cout<<c<<"*"<<nwnum<<endl;
-				
-				while(nwnum--){
-					cout<<c;
-				}
-				nwnum=0;
+		INT lst[n+1];
+		lst[0]=0;
+		INT all=0;
+		for(INT i=1;i<=n;i++){
+			cin>>lst[i];
+			all+=lst[i];
+		}
+		if(all%2){cout<<"No"<<endl;continue;}
+		INT dp[n+1][all/2+1];
+		set0(dp);
+		for(INT i=1;i<=n;i++){
+			for(INT j=lst[i];j<=all/2;j++){
+				dp[i][j]=max(dp[i-1][j],dp[i-1][j-lst[i]]+lst[i]);
 			}
 		}
-		cout<<endl;
+		if(dp[n][all/2]==all/2){
+			cout<<"Yes"<<endl;
+		}else{
+			cout<<"No"<<endl;
+		}
+		/*solve*/
 	}
 	return 0;
 }

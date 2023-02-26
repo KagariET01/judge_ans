@@ -56,13 +56,16 @@ using namespace std;
 /*num*/
 bool debug=0;
 bool iofast=true;
+PII mv[]={{0,1},{1,0},{0,-1},{-1,0}};
+INT mx[]={0,1,0,-1};
+INT my[]={1,0,-1,0};
+INT mod=988244353;
 /*fn定義*/
 template<typename TPE>TPE reader(){
 	TPE a;
 	cin>>a;
 	return a;
 }
-	string s;
 
 
 
@@ -75,26 +78,20 @@ int main(){
 	srand(time(NULL));
 	INT t=1;
 	while(t--){
-		cin>>s;
 		/*CIN*/
+		double a1,a2,b1,b2;
+		cin>>a1>>a2>>b1>>b2;
 		/*solve*/
-		INT nwnum=0;
-		for(char c:s){
-			if('0'<=c&& c<='9'){
-				nwnum*=10;
-				nwnum+=c-'0';
-			}
-			else{
-				if(nwnum==0)nwnum=1;
-				//cout<<c<<"*"<<nwnum<<endl;
-				
-				while(nwnum--){
-					cout<<c;
-				}
-				nwnum=0;
-			}
-		}
-		cout<<endl;
+		double x=(b2-b1)/(a1-a2);
+		double y=(b1*a2-b2*a1)/(a2-a1);
+		x*=100;
+		y*=100;
+		x=round(x);
+		y=round(y);
+		if(x==-0.0)x=0.0;
+		if(y==-0.0)y=0.0;
+		cout<<fixed<<setprecision(2)<<x/100<<endl;
+		cout<<fixed<<setprecision(2)<<y/100<<endl;
 	}
 	return 0;
 }

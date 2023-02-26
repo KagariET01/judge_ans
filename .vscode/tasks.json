@@ -25,12 +25,13 @@
 		}*/
 		{
 			"type": "cppbuild",
-			"label": "C/C++: g++.exe 建置使用中檔案",
+			"label": "build this cpp file",
 			"command": "g++",
 			"args": [
 				"-o",
 				"${workspaceFolder}\\run.exe",
-				"${file}"
+				"${file}",
+				"-g"
 			],
 			"options": {
 			},

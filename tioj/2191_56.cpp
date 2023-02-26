@@ -5,7 +5,7 @@
 [AtCoder]		[Q]https://atcoder.jp/contests/ [ID] /tasks/ [ID] _ [PID]
 [CF]				[Q]
 [ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
-[]
+[WA]
 */
 
 
@@ -56,13 +56,16 @@ using namespace std;
 /*num*/
 bool debug=0;
 bool iofast=true;
+PII mv[]={{0,1},{1,0},{0,-1},{-1,0}};
+INT mx[]={0,1,0,-1};
+INT my[]={1,0,-1,0};
+INT mod=988244353;
 /*fn定義*/
 template<typename TPE>TPE reader(){
 	TPE a;
 	cin>>a;
 	return a;
 }
-	string s;
 
 
 
@@ -75,26 +78,54 @@ int main(){
 	srand(time(NULL));
 	INT t=1;
 	while(t--){
-		cin>>s;
 		/*CIN*/
-		/*solve*/
-		INT nwnum=0;
-		for(char c:s){
-			if('0'<=c&& c<='9'){
-				nwnum*=10;
-				nwnum+=c-'0';
-			}
-			else{
-				if(nwnum==0)nwnum=1;
-				//cout<<c<<"*"<<nwnum<<endl;
-				
-				while(nwnum--){
-					cout<<c;
-				}
-				nwnum=0;
+		INT n=read(INT);
+		vector<P(PII,INT)> vec;
+		vec.resize(n);
+		bool xsame=true;
+		bool ysame=true;
+		for(INT i=0;i<n;i++){
+			vec[i]={{read(INT),read(INT)},read(INT)};
+			if(i>0){
+				if(vec[i].FIR.FIR!=vec[i-1].FIR.FIR)xsame=false;
+				if(vec[i].FIR.SEC!=vec[i-1].FIR.SEC)ysame=false;
 			}
 		}
-		cout<<endl;
+		/*for(P(PII,INT) i:vec){
+			cerr<<i.FIR.FIR<<","<<i.FIR.SEC<<","<<i.SEC<<endl;
+		}*/
+		/*solve*/
+		if(xsame||ysame){
+			vector<PII> vslst;
+			vslst.resize(n);
+			if(xsame){
+				//cerr<<"xsame"<<endl;
+				for(INT i=0;i<n;i++){
+					vslst[i]={vec[i].FIR.SEC,vec[i].SEC};
+				}
+			}
+			if(ysame){
+				//cerr<<"ysame"<<endl;
+				for(INT i=0;i<n;i++){
+					vslst[i]={vec[i].FIR.FIR,vec[i].SEC};
+				}
+			}
+			sort(vslst.begin(),vslst.end());
+			INT ans=0;
+			INT nw=0;
+			INT l=0;
+			for(INT i=0;i<n*2;i++){
+				nw+=vslst[i%n].SEC;
+				while(nw<0 || vslst[l].SEC<0 || i-n==l ){
+					nw-=vslst[l].SEC;
+					l++;
+					l%=n;
+				}
+				ans=max(ans,nw);
+			}
+			cout<<ans<<endl;
+			continue;
+		}//else cerr<<"nosame"<<endl;
 	}
 	return 0;
 }

@@ -1,11 +1,6 @@
 /*
-[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/ [ID]
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid= [ID]
-[cses]			[Q]https://cses.fi/problemset/task/ [ID]
-[AtCoder]		[Q]https://atcoder.jp/contests/ [ID] /tasks/ [ID] _ [PID]
-[CF]				[Q]
-[ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
-[]
+[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/2189
+[WA]
 */
 
 
@@ -56,15 +51,39 @@ using namespace std;
 /*num*/
 bool debug=0;
 bool iofast=true;
+PII mv[]={{0,1},{1,0},{0,-1},{-1,0}};
+INT mx[]={0,1,0,-1};
+INT my[]={1,0,-1,0};
+INT mod=988244353;
 /*fn定義*/
 template<typename TPE>TPE reader(){
 	TPE a;
 	cin>>a;
 	return a;
 }
-	string s;
-
-
+const INT mxn=1e5;
+vector<INT> vec[mxn+1];
+map<PII,INT> lne;
+P(INT,PII) dfs(INT n,INT lst){
+	INT llst[6];
+	set0(llst);
+	for(INT i:vec[n]){
+		if(i==lst){
+			continue;
+		}
+		P(INT,PII) get=dfs(i,n);
+		INT lneadd=lne[{n,i}];
+		INT a=get.FIR+lneadd;
+		INT b=get.SEC.FIR+lneadd;
+		INT c=get.SEC.SEC+lneadd;
+		llst[0]=llst[1]=llst[2]=0;
+		if(llst[3]!=a && llst[4]!=a && llst[5]!=a)llst[0]=a;
+		if(llst[3]!=b && llst[4]!=b && llst[5]!=b && llst[0]!=b)llst[1]=b;
+		if(llst[3]!=c && llst[4]!=c && llst[5]!=c && llst[0]!=c && llst[1]!=c)llst[2]=c;
+		sort(llst,llst+5);
+	}
+	return {llst[2],{llst[3],llst[4]}};
+}
 
 
 
@@ -75,26 +94,22 @@ int main(){
 	srand(time(NULL));
 	INT t=1;
 	while(t--){
-		cin>>s;
 		/*CIN*/
-		/*solve*/
-		INT nwnum=0;
-		for(char c:s){
-			if('0'<=c&& c<='9'){
-				nwnum*=10;
-				nwnum+=c-'0';
-			}
-			else{
-				if(nwnum==0)nwnum=1;
-				//cout<<c<<"*"<<nwnum<<endl;
-				
-				while(nwnum--){
-					cout<<c;
-				}
-				nwnum=0;
-			}
+		INT n=read(INT);
+		for(INT i=0;i<n-1;i++){
+			INT u,v,w;
+			cin>>u>>v>>w;
+			vec[u].push_back(v);
+			vec[v].push_back(u);
+			lne[{u,v}]=lne[{v,u}]=w;
 		}
-		cout<<endl;
+		/*solve*/
+		P(INT,PII) reans=dfs(0,-1);
+		INT ans[3]={reans.FIR+reans.SEC.FIR,reans.FIR+reans.SEC.SEC,reans.SEC.FIR+reans.SEC.SEC};
+		sort(ans,ans+3);
+		if(ans[2]==ans[1])cout<<ans[0]<<endl;
+		else cout<<ans[1]<<endl;
+		cerr<<ans[0]<<","<<ans[1]<<","<<ans[2]<<endl;
 	}
 	return 0;
 }
