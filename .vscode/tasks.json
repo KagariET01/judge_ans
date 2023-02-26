@@ -17,7 +17,7 @@
 			],
 			"group": {
 				"kind": "build",
-				"isDefault": true
+				"isDefault": false
 			},
 			"detail": "偵錯工具產生的工作。"
 		},
@@ -36,7 +36,7 @@
 				"$gcc"
 			],
 			"group": {
-				"kind": "build",
+				"kind": "none",
 				"isDefault": true
 			},
 			"detail": "偵錯工具產生的工作。"

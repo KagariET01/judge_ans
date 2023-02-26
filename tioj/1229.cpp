@@ -56,6 +56,9 @@ using namespace std;
 /*num*/
 bool debug=0;
 bool iofast=true;
+PII mv[]={{0,1},{1,0},{0,-1},{-1,0}};
+INT mx[]={0,1,0,-1};
+INT my[]={1,0,-1,0};
 INT mod=988244353;
 /*fn定義*/
 template<typename TPE>TPE reader(){
@@ -64,24 +67,41 @@ template<typename TPE>TPE reader(){
 	return a;
 }
 
-const INT mxm=1e6;
-INT road[mxm+1][mxm+1];//i to j cost ?
-vector<INT> tre[mxm+1];
+
+
+
 
 
 /*main*/
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	INT m,n;
-	while(cin>>m>>n){
-		memset(road,-1,sizeof(road));
+	INT l,n,m;
+	while(cin>>l>>n>>m){
 		/*CIN*/
+		vector<INT> passkey(n);
 		for(INT i=0;i<n;i++){
-			INT p,q,r;
-			cin>>p>>q>>r;
-			road[p][q]=r;
-			tre[p].push_back(q);
+			passkey[i]=read(INT)-1;
+		}
+		vector<INT> newpass(n);
+		for(INT i=0;i<n;i++){
+			newpass[i]=i;
+		}
+		for(INT i=0;i<m;i++){
+			vector<INT> nwpass(n);
+			for(INT j=0;j<n;j++){
+				nwpass[passkey[j]]=newpass[j];
+			}
+			newpass=nwpass;
+		}
+		string inin="";
+		for(INT i=0;i<l;i++){
+			cin>>inin;
+			string ans=inin;
+			for(INT j=0;j<n;j++){
+				ans[j]=inin[newpass[j]];
+			}
+			cout<<ans<<endl;
 		}
 		/*solve*/
 	}

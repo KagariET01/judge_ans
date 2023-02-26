@@ -4,8 +4,8 @@
 	// 如需詳細資訊，請瀏覽: https://go.microsoft.com/fwlink/?linkid=830387
 	"version": "0.2.0",
 	"configurations": [
-		{
-			"name": "gdb",
+		{"name":"Python: 目前的檔案","type":"python","request":"launch","program":"${file}","console":"integratedTerminal","justMyCode":true},
+		{"name": "gdb",
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}\\run.exe",
@@ -25,8 +25,7 @@
 			],
 			"preLaunchTask": "dbg this cpp file"
 		},
-		{
-			"name": "g++",
+		{"name": "g++",
 			"type":"cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}\\run.exe",
@@ -37,8 +36,7 @@
 			"externalConsole": false,
 			"preLaunchTask": "build this cpp file"
 		},
-		{
-			"name": "rerun",
+		{"name": "rerun",
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}\\run.exe",
