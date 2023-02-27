@@ -65,9 +65,12 @@ template<typename TPE>TPE reader(){
 }
 
 const INT mxm=1e6;
-INT road[mxm+1][mxm+1];//i to j cost ?
+INT toroad[mxm+1];
+INT bkroad[mxm+1];
 vector<INT> tre[mxm+1];
-
+vector<INT> bktre[mxm+1];
+map<PII,INT> lne;
+map<PII,INT> bklne;
 
 /*main*/
 int main(){
@@ -75,15 +78,70 @@ int main(){
 	srand(time(NULL));
 	INT m,n;
 	while(cin>>m>>n){
-		memset(road,-1,sizeof(road));
+		memset(toroad,-1,sizeof(toroad));
+		memset(bkroad,-1,sizeof(bkroad));
 		/*CIN*/
 		for(INT i=0;i<n;i++){
 			INT p,q,r;
 			cin>>p>>q>>r;
-			road[p][q]=r;
 			tre[p].push_back(q);
+			lne[{p,q}]=r;
+			bktre[q].push_back(p);
+			bklne[{q,p}]=r;
 		}
 		/*solve*/
+		toroad[1]=0;
+		deque<INT> dq;
+		dq.push_back(1);
+		bool cansolve=true;
+		while(dq.wassomething()){
+			INT nw=dq.front();
+			dq.pop_front();
+			for(INT i:tre[nw]){
+				INT newroad=toroad[nw]+lne[{nw,i}];
+				if(toroad[i]==-1 || toroad[i]>newroad){
+					toroad[i]=newroad;
+					dq.push_back(i);
+				}
+			}
+		}
+
+		INT ans=0;
+		for(INT i=1;i<=m && cansolve;i++){
+			if(toroad[i]==-1)cansolve=false;
+			ans+=toroad[i];
+		}
+		
+		if(!cansolve){
+			cout<<0<<endl;
+			continue;
+		}
+
+		bkroad[1]=0;
+		dq.push_back(1);
+		while(dq.wassomething()){
+			INT nw=dq.front();
+			dq.pop_front();
+			for(INT i:bktre[nw]){
+				INT newroad=bkroad[nw]+lne[{nw,i}];
+				if(bkroad[i]==-1 || bkroad[i]>newroad){
+					bkroad[i]=newroad;
+					dq.push_back(i);
+				}
+			}
+		}
+
+
+		for(INT i=1;i<=m && cansolve;i++){
+			if(bkroad[i]==-1)cansolve=false;
+			ans+=bkroad[i];
+		}
+		if(!cansolve){
+			cout<<0<<endl;
+			continue;
+		}
+
+		cout<<ans<<endl;
 	}
 	return 0;
 }
