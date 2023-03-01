@@ -1,11 +1,7 @@
 /*
-[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/ [ID]
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid= [ID]
-[cses]			[Q]https://cses.fi/problemset/task/ [ID]
-[AtCoder]		[Q]https://atcoder.jp/contests/ [ID] /tasks/ [ID] _ [PID]
-[CF]				[Q]
-[ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
-[]
+[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/2248
+[DFS]
+[AC]
 */
 
 
@@ -56,19 +52,32 @@ using namespace std;
 /*num*/
 bool debug=0;
 bool iofast=true;
-PII mv[]={{0,1},{1,0},{0,-1},{-1,0}};
-INT mx[]={0,1,0,-1};
-INT my[]={1,0,-1,0};
-INT mod=988244353;
 /*fn定義*/
 template<typename TPE>TPE reader(){
 	TPE a;
 	cin>>a;
 	return a;
 }
+
 const INT mxn=1e5;
 INT w[mxn+1];
-vector<INT>vec[mxn+1];
+vector<INT> vec[mxn+1];
+map<PII,INT> mp;
+INT ans=0;
+INT n,k;
+
+void dfs(INT n,INT lst=-1){
+	//cerr<<"w["<<n<<"]="<<w[n]<<endl;
+	for(INT i:vec[n]){
+		if(lst==i)continue;
+		//cerr<<n<<">"<<i<<endl;
+		dfs(i,n);
+		w[n]+=w[i]-k;
+		ans+=abs(w[i]-k)*mp[{n,i}];
+		w[i]=k;
+	}
+}
+
 
 
 
@@ -80,18 +89,54 @@ int main(){
 	srand(time(NULL));
 	INT t=1;
 	while(t--){
+		set0(w);
+		for(INT i=0;i<mxn;i++){
+			vec[i].clear();
+		}
+		ans=0;
+		mp.clear();
 		/*CIN*/
-		INT n,k;
 		cin>>n>>k;
-
+		for(INT i=0;i<n;i++){
+			cin>>w[i];
+		}
+		for(INT i=0;i<n-1;i++){
+			INT u,v,d;
+			cin>>u>>v>>d;
+			u--;
+			v--;
+			vec[u].push_back(v);
+			vec[v].push_back(u);
+			mp[{u,v}]=mp[{v,u}]=d;
+		}
 		/*solve*/
+		dfs(0);
+		cout<<ans<<endl;
 	}
 	return 0;
 }
 
 /*
 [I1]
+8 2
+4 2 2 1 3 3 0 1
+1 2 3
+2 3 1
+3 4 2
+5 6 2
+6 7 3
+6 8 1
+2 6 3
 [O1]
+21
+[I2]
+4 3
+1 10 0 1
+1 4 3
+3 2 2
+4 2 1
+[O2]
+16
 */
 
 /*think*/

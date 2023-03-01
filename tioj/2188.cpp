@@ -1,5 +1,10 @@
 /*
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=b115
+[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/ [ID]
+[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid= [ID]
+[cses]			[Q]https://cses.fi/problemset/task/ [ID]
+[AtCoder]		[Q]https://atcoder.jp/contests/ [ID] /tasks/ [ID] _ [PID]
+[CF]				[Q]
+[ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
 []
 */
 
@@ -51,57 +56,15 @@ using namespace std;
 /*num*/
 bool debug=0;
 bool iofast=true;
-PII mv[]={{0,1},{1,0},{0,-1},{-1,0}};
-INT mx[]={0,1,0,-1};
-INT my[]={1,0,-1,0};
-INT mod=988244353;
 /*fn定義*/
 template<typename TPE>TPE reader(){
 	TPE a;
 	cin>>a;
 	return a;
 }
-struct bignum{
-	vector<INT> vec;
-	string s="";
-	INT sz=0;
-	void build(){
-		vec.clear();
-		sz=s.size();
-		vec.resize(sz);
-		for(INT i=0;i<sz;i++){
-			vec[i]=s[i]-'0';
-		}
-	}
-	INT size(){
-		return sz;
-	}
-	void inin(){
-		sz=vec.size()+1;
-		vec.resize(sz);
-		for(INT i=0;i<sz;i++){
-			vec[i+1]+=vec[i]/10;
-			vec[i]%=10;
-		}
-	}
-};
+	string s;
 
-bignum operator*(const bignum &a,const bignum &b){
-	bignum re;
-	re.sz=a.sz+b.sz;
-	re.vec.resize(re.sz);
-	for(INT i=0;i<a.sz;i++){
-		if(a.vec[i]==0)continue;
-		for(INT j=0;j<b.sz;j++){
-			re.vec[i+j]+=a.vec[i]*i+b.vec[i]*j;
-		}
-	}
-	return re;
-}
-bignum operator/(const bignum &a,const bignum &b){
-	bignum re;
-	return re;
-}
+
 
 
 
@@ -110,11 +73,28 @@ bignum operator/(const bignum &a,const bignum &b){
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	string sa;
-	while(cin>>sa){
-
+	INT t=1;
+	while(t--){
+		cin>>s;
 		/*CIN*/
 		/*solve*/
+		INT nwnum=0;
+		for(char c:s){
+			if('0'<=c&& c<='9'){
+				nwnum*=10;
+				nwnum+=c-'0';
+			}
+			else{
+				if(nwnum==0)nwnum=1;
+				//cout<<c<<"*"<<nwnum<<endl;
+				
+				while(nwnum--){
+					cout<<c;
+				}
+				nwnum=0;
+			}
+		}
+		cout<<endl;
 	}
 	return 0;
 }

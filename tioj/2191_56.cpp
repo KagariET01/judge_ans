@@ -1,6 +1,11 @@
 /*
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=b115
-[]
+[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/ [ID]
+[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid= [ID]
+[cses]			[Q]https://cses.fi/problemset/task/ [ID]
+[AtCoder]		[Q]https://atcoder.jp/contests/ [ID] /tasks/ [ID] _ [PID]
+[CF]				[Q]
+[ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
+[WA]
 */
 
 
@@ -61,47 +66,8 @@ template<typename TPE>TPE reader(){
 	cin>>a;
 	return a;
 }
-struct bignum{
-	vector<INT> vec;
-	string s="";
-	INT sz=0;
-	void build(){
-		vec.clear();
-		sz=s.size();
-		vec.resize(sz);
-		for(INT i=0;i<sz;i++){
-			vec[i]=s[i]-'0';
-		}
-	}
-	INT size(){
-		return sz;
-	}
-	void inin(){
-		sz=vec.size()+1;
-		vec.resize(sz);
-		for(INT i=0;i<sz;i++){
-			vec[i+1]+=vec[i]/10;
-			vec[i]%=10;
-		}
-	}
-};
 
-bignum operator*(const bignum &a,const bignum &b){
-	bignum re;
-	re.sz=a.sz+b.sz;
-	re.vec.resize(re.sz);
-	for(INT i=0;i<a.sz;i++){
-		if(a.vec[i]==0)continue;
-		for(INT j=0;j<b.sz;j++){
-			re.vec[i+j]+=a.vec[i]*i+b.vec[i]*j;
-		}
-	}
-	return re;
-}
-bignum operator/(const bignum &a,const bignum &b){
-	bignum re;
-	return re;
-}
+
 
 
 
@@ -110,11 +76,56 @@ bignum operator/(const bignum &a,const bignum &b){
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	string sa;
-	while(cin>>sa){
-
+	INT t=1;
+	while(t--){
 		/*CIN*/
+		INT n=read(INT);
+		vector<P(PII,INT)> vec;
+		vec.resize(n);
+		bool xsame=true;
+		bool ysame=true;
+		for(INT i=0;i<n;i++){
+			vec[i]={{read(INT),read(INT)},read(INT)};
+			if(i>0){
+				if(vec[i].FIR.FIR!=vec[i-1].FIR.FIR)xsame=false;
+				if(vec[i].FIR.SEC!=vec[i-1].FIR.SEC)ysame=false;
+			}
+		}
+		/*for(P(PII,INT) i:vec){
+			cerr<<i.FIR.FIR<<","<<i.FIR.SEC<<","<<i.SEC<<endl;
+		}*/
 		/*solve*/
+		if(xsame||ysame){
+			vector<PII> vslst;
+			vslst.resize(n);
+			if(xsame){
+				//cerr<<"xsame"<<endl;
+				for(INT i=0;i<n;i++){
+					vslst[i]={vec[i].FIR.SEC,vec[i].SEC};
+				}
+			}
+			if(ysame){
+				//cerr<<"ysame"<<endl;
+				for(INT i=0;i<n;i++){
+					vslst[i]={vec[i].FIR.FIR,vec[i].SEC};
+				}
+			}
+			sort(vslst.begin(),vslst.end());
+			INT ans=0;
+			INT nw=0;
+			INT l=0;
+			for(INT i=0;i<n*2;i++){
+				nw+=vslst[i%n].SEC;
+				while(nw<0 || vslst[l].SEC<0 || i-n==l ){
+					nw-=vslst[l].SEC;
+					l++;
+					l%=n;
+				}
+				ans=max(ans,nw);
+			}
+			cout<<ans<<endl;
+			continue;
+		}//else cerr<<"nosame"<<endl;
 	}
 	return 0;
 }

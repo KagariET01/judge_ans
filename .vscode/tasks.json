@@ -1,22 +1,44 @@
 {
-  "tasks": [
-    {
-      "type": "cppbuild",
-      "label": "C/C++: cpp.exe 建置使用中檔案",
-      "command": "g++",
-      "args": [
-        "-o",
-        "${workspaceFolder}\\run.exe",
-        "${file}"
-      ],
-      "problemMatcher": [
-        "$gcc"
-      ],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-    }
-  ],
-  "version": "2.0.0"
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "dbg this cpp file",
+			"command": "g++",
+			"args": [
+				"-o",
+				"${workspaceFolder}\\run.exe",
+				"${file}",
+				"-g"
+			],
+			"options": {
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "none",
+				"isDefault": false
+			}
+		},
+		{
+			"type": "cppbuild",
+			"label": "build this cpp file",
+			"command": "g++",
+			"args": [
+				"-o",
+				"${workspaceFolder}\\run.exe",
+				"${file}",
+			],
+			"options": {
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "none",
+				"isDefault": true
+			}
+		}
+	],
+	"version": "2.0.0"
 }

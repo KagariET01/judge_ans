@@ -1,6 +1,6 @@
 /*
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=b115
-[]
+[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/1232
+[AC]
 */
 
 
@@ -61,46 +61,23 @@ template<typename TPE>TPE reader(){
 	cin>>a;
 	return a;
 }
-struct bignum{
-	vector<INT> vec;
-	string s="";
-	INT sz=0;
-	void build(){
-		vec.clear();
-		sz=s.size();
-		vec.resize(sz);
-		for(INT i=0;i<sz;i++){
-			vec[i]=s[i]-'0';
-		}
-	}
-	INT size(){
-		return sz;
-	}
-	void inin(){
-		sz=vec.size()+1;
-		vec.resize(sz);
-		for(INT i=0;i<sz;i++){
-			vec[i+1]+=vec[i]/10;
-			vec[i]%=10;
-		}
-	}
-};
 
-bignum operator*(const bignum &a,const bignum &b){
-	bignum re;
-	re.sz=a.sz+b.sz;
-	re.vec.resize(re.sz);
-	for(INT i=0;i<a.sz;i++){
-		if(a.vec[i]==0)continue;
-		for(INT j=0;j<b.sz;j++){
-			re.vec[i+j]+=a.vec[i]*i+b.vec[i]*j;
+vector<INT> vec;
+INT n,r;
+const INT mxn=10;
+bool runlst[mxn+1];
+
+void solve(INT p=0,INT nw=0){
+	if(p==r){
+		vec.push_back(nw);
+	}else{
+		for(INT i=0;i<n;i++){
+			if(runlst[i])continue;
+			runlst[i]=true;
+			solve(p+1,nw*10+i);
+			runlst[i]=false;
 		}
 	}
-	return re;
-}
-bignum operator/(const bignum &a,const bignum &b){
-	bignum re;
-	return re;
 }
 
 
@@ -110,11 +87,18 @@ bignum operator/(const bignum &a,const bignum &b){
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	string sa;
-	while(cin>>sa){
-
+	while(cin>>n>>r){
+		/*re:0*/
+		set0(runlst);
+		vec.clear();
 		/*CIN*/
 		/*solve*/
+		solve();
+		if(vec.size()<r+n){
+			cout<<vec[0]<<endl;
+		}else{
+			cout<<vec[vec.size()-(r+n)]<<endl;
+		}
 	}
 	return 0;
 }

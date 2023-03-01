@@ -1,6 +1,6 @@
 /*
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=b115
-[]
+[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/1230
+[80% TLE]
 */
 
 
@@ -30,7 +30,7 @@ using namespace std;
 #define what_the_fuck cin.tie(0);cout.tie(0);ios::sync_with_stdio(false)
 #define ULLI unsigned long long int
 #define LLI long long int
-#define INT LLI
+#define INT int
 #define UINT unsigned INT
 #define PII pair<INT,INT>
 #define PUIUI pair<UINT,UINT>
@@ -51,7 +51,6 @@ using namespace std;
 /*num*/
 bool debug=0;
 bool iofast=true;
-PII mv[]={{0,1},{1,0},{0,-1},{-1,0}};
 INT mx[]={0,1,0,-1};
 INT my[]={1,0,-1,0};
 INT mod=988244353;
@@ -61,46 +60,56 @@ template<typename TPE>TPE reader(){
 	cin>>a;
 	return a;
 }
-struct bignum{
-	vector<INT> vec;
-	string s="";
-	INT sz=0;
-	void build(){
-		vec.clear();
-		sz=s.size();
-		vec.resize(sz);
-		for(INT i=0;i<sz;i++){
-			vec[i]=s[i]-'0';
-		}
-	}
-	INT size(){
-		return sz;
-	}
-	void inin(){
-		sz=vec.size()+1;
-		vec.resize(sz);
-		for(INT i=0;i<sz;i++){
-			vec[i+1]+=vec[i]/10;
-			vec[i]%=10;
-		}
-	}
-};
+const INT mxn=7;
+INT mp[mxn+1][mxn+1];
+bool fmv[mxn+1][mxn+1];
+bool smv[mxn+1][mxn+1];
+bool allmv[mxn+1][mxn+1];
+INT n,m;
+INT apans=0;
+INT bpans=0;
 
-bignum operator*(const bignum &a,const bignum &b){
-	bignum re;
-	re.sz=a.sz+b.sz;
-	re.vec.resize(re.sz);
-	for(INT i=0;i<a.sz;i++){
-		if(a.vec[i]==0)continue;
-		for(INT j=0;j<b.sz;j++){
-			re.vec[i+j]+=a.vec[i]*i+b.vec[i]*j;
+
+void dfs(INT x=0,INT y=0,INT p=0,INT nwcoin=0){
+	if(x<0 || x>=n || y<0 || y>=m)return;
+	//偵測是否走過
+	if(p==0){
+		if(fmv[x][y])return;
+		else fmv[x][y]=true;
+	}else{
+		if(smv[x][y])return;
+		else smv[x][y]=true;
+	}
+	//檢測是否能拿金幣
+	bool tkecoin=false;
+	if(!allmv[x][y]){
+		nwcoin+=mp[x][y];
+		allmv[x][y]=true;
+		tkecoin=true;
+	}
+	//這裡是否為終點站
+	if(x==n-1 && y==m-1){
+		if(p==0){
+			apans=max(apans,nwcoin);
+			dfs(0,0,1,nwcoin);//換下一個人
+		}else{
+			bpans=max(bpans,nwcoin);
+		}
+	}else{
+//		cerr<<p<<"go to"<<x<<","<<y<<",get"<<nwcoin<<endl;
+		//往下走
+		for(INT i=0;i<4;i++){
+			dfs(x+mx[i],y+my[i],p,nwcoin);
 		}
 	}
-	return re;
-}
-bignum operator/(const bignum &a,const bignum &b){
-	bignum re;
-	return re;
+
+	//往後走(?)
+	if(tkecoin)allmv[x][y]=false;
+	if(p==0){
+		fmv[x][y]=false;
+	}else{
+		smv[x][y]=false;
+	}
 }
 
 
@@ -110,11 +119,29 @@ bignum operator/(const bignum &a,const bignum &b){
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	string sa;
-	while(cin>>sa){
-
+	while(cin>>n>>m){
+		set0(mp);
+		set0(fmv);
+		set0(smv);
+		set0(allmv);
+		apans=0;
+		bpans=0;
 		/*CIN*/
+		for (INT i = 0; i < n; i++){
+			for(INT j=0;j<m;j++){
+				char c=read(char);
+				if(c=='x'){
+					mp[i][j]=-1;
+					fmv[i][j]=true;
+					smv[i][j]=true;
+					allmv[i][j]=true;
+				}
+				else mp[i][j]=c-'0';
+			}
+		}
 		/*solve*/
+		dfs();
+		cout<<bpans<<endl;
 	}
 	return 0;
 }

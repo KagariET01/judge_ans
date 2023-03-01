@@ -1,6 +1,6 @@
 /*
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=b115
-[]
+[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/2189
+[WA]
 */
 
 
@@ -61,46 +61,28 @@ template<typename TPE>TPE reader(){
 	cin>>a;
 	return a;
 }
-struct bignum{
-	vector<INT> vec;
-	string s="";
-	INT sz=0;
-	void build(){
-		vec.clear();
-		sz=s.size();
-		vec.resize(sz);
-		for(INT i=0;i<sz;i++){
-			vec[i]=s[i]-'0';
+const INT mxn=1e5;
+vector<INT> vec[mxn+1];
+map<PII,INT> lne;
+P(INT,PII) dfs(INT n,INT lst){
+	INT llst[6];
+	set0(llst);
+	for(INT i:vec[n]){
+		if(i==lst){
+			continue;
 		}
+		P(INT,PII) get=dfs(i,n);
+		INT lneadd=lne[{n,i}];
+		INT a=get.FIR+lneadd;
+		INT b=get.SEC.FIR+lneadd;
+		INT c=get.SEC.SEC+lneadd;
+		llst[0]=llst[1]=llst[2]=0;
+		if(llst[3]!=a && llst[4]!=a && llst[5]!=a)llst[0]=a;
+		if(llst[3]!=b && llst[4]!=b && llst[5]!=b && llst[0]!=b)llst[1]=b;
+		if(llst[3]!=c && llst[4]!=c && llst[5]!=c && llst[0]!=c && llst[1]!=c)llst[2]=c;
+		sort(llst,llst+5);
 	}
-	INT size(){
-		return sz;
-	}
-	void inin(){
-		sz=vec.size()+1;
-		vec.resize(sz);
-		for(INT i=0;i<sz;i++){
-			vec[i+1]+=vec[i]/10;
-			vec[i]%=10;
-		}
-	}
-};
-
-bignum operator*(const bignum &a,const bignum &b){
-	bignum re;
-	re.sz=a.sz+b.sz;
-	re.vec.resize(re.sz);
-	for(INT i=0;i<a.sz;i++){
-		if(a.vec[i]==0)continue;
-		for(INT j=0;j<b.sz;j++){
-			re.vec[i+j]+=a.vec[i]*i+b.vec[i]*j;
-		}
-	}
-	return re;
-}
-bignum operator/(const bignum &a,const bignum &b){
-	bignum re;
-	return re;
+	return {llst[2],{llst[3],llst[4]}};
 }
 
 
@@ -110,11 +92,24 @@ bignum operator/(const bignum &a,const bignum &b){
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	string sa;
-	while(cin>>sa){
-
+	INT t=1;
+	while(t--){
 		/*CIN*/
+		INT n=read(INT);
+		for(INT i=0;i<n-1;i++){
+			INT u,v,w;
+			cin>>u>>v>>w;
+			vec[u].push_back(v);
+			vec[v].push_back(u);
+			lne[{u,v}]=lne[{v,u}]=w;
+		}
 		/*solve*/
+		P(INT,PII) reans=dfs(0,-1);
+		INT ans[3]={reans.FIR+reans.SEC.FIR,reans.FIR+reans.SEC.SEC,reans.SEC.FIR+reans.SEC.SEC};
+		sort(ans,ans+3);
+		if(ans[2]==ans[1])cout<<ans[0]<<endl;
+		else cout<<ans[1]<<endl;
+		cerr<<ans[0]<<","<<ans[1]<<","<<ans[2]<<endl;
 	}
 	return 0;
 }
