@@ -73,7 +73,14 @@ int n,m;
 vector<INT> tre[mxn+1];
 bool isst[mxn+1];
 
-
+INT dfs(INT n){
+  INT re=wk[n];
+  for(INT i:tre[n]){
+    re=min(re,dfs(i));
+  }
+  wk[n]-=re;
+  return re;
+}
 
 
 
@@ -93,6 +100,7 @@ int main(){
     for(INT i=1;i<=m;i++){
       int a,b;cin>>a>>b;
       tre[a].push_back(b);
+      isst[b]=false;
     }
     /*solve*/
 
