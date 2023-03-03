@@ -62,7 +62,12 @@ template<typename TPE>TPE reader(){
 	return a;
 }
 
+vector<PII> vec;//格式：{熱量,保存期限}
 
+bool vser(PII a,PII b){
+	if(a.SEC==b.SEC)return a.FIR>b.FIR;//保存期限一樣的話，熱量多的先吃
+	else return a.SEC<b.SEC;//保存期限低的先吃
+}
 
 
 
@@ -71,12 +76,19 @@ template<typename TPE>TPE reader(){
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	INT t=read(INT);
+	INT t=1;
 	while(t--){
 		/*CIN*/
 		INT n=read(INT);
-		cout<<n<<endl;
+		for(INT i=0;i<n;i++){
+			vec.push_back({read(INT),read(INT)});
+		}
+		INT t=read(INT);
 		/*solve*/
+		sort(vec.begin(),vec.end(),vser);
+		for(PII i:vec){
+			
+		}
 	}
 	return 0;
 }
