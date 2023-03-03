@@ -1,6 +1,6 @@
 /*
 [tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/1231
-[]
+[AC]
 */
 
 
@@ -87,9 +87,9 @@ int main(){
 		/*solve*/
 		INT ans=0;
 		sort(vec.begin(),vec.end(),vser);
-		priority_queue(INT,vector<INT>,greater<INT>) que;//儲存要吃的熱量
+		priority_queue<INT,vector<INT>,greater<INT>> que;//儲存要吃的熱量
 		for(PII i:vec){
-			if(i.SEC < que.size() && que.size()<t){//第一式為吃完que裡的東西，i還沒過期，那就可以吃，第二式為所有東西吃完後，比賽還沒結束
+			if(que.size() < i.SEC && que.size()<t){//第一式為吃完que裡的東西，i還沒過期，那就可以吃，第二式為所有東西吃完後，比賽還沒結束
 				que.push(i.FIR);//吃
 				ans+=i.FIR;
 			}elif(que.top()<i.FIR){//如果原本吃的熱量比較少
