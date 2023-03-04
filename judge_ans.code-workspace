@@ -4,5 +4,12 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"\"*.cpp\"": "c++",
+			"span": "cpp",
+			"type_traits": "cpp",
+			"iostream": "cpp"
+		}
+	}
 }
