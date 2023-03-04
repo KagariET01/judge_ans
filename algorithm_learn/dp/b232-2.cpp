@@ -1,17 +1,6 @@
 /*
-[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/ [ID]
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid= [ID]
-[cses]			[Q]https://cses.fi/problemset/task/ [ID]
-[AtCoder]		[Q]https://atcoder.jp/contests/ [ID] /tasks/ [ID] _ [PID]
-[CF]				[Q]
-[ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
-[neoj]			[Q]https://neoj.sprout.tw/problem/ [ID]
-
-[result]		[]
-[time]			[]
-[mem]				[]
-[challenge]	[]
-[sub time]	[YYYY/MM/DD HH:MM:SS]
+[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=b232
+[AC]
 */
 
 
@@ -62,17 +51,31 @@ using namespace std;
 /*num*/
 bool debug=0;
 bool iofast=true;
-PII mv[]={{0,1},{1,0},{0,-1},{-1,0}};
-INT mx[]={0,1,0,-1};
-INT my[]={1,0,-1,0};
-INT mod=988244353;
 /*fn定義*/
 template<typename TPE>TPE reader(){
 	TPE a;
 	cin>>a;
 	return a;
 }
-
+const INT mxn=750;
+INT dp[mxn+1][mxn+1];
+INT solve(INT al,INT mx){//al為最終要湊出的$，mx為最大面額
+	if(!dp[al][mx]){
+		if(al==0){//
+			dp[al][mx]=1;
+		}elif(mx==0){//如果面額為0:無解
+			dp[al][mx]=0;
+		}elif(mx%2==0){//不允許面額為2的倍數
+			dp[al][mx]=solve(al,mx-1);
+		}else{
+			dp[al][mx]=solve(al,mx-1);//一種組法：1+(al+1) 例如10=1+9
+			if(mx<=al){
+				dp[al][mx]+=solve(al-mx,mx);//一種組法:假設我們要湊出10，而最大面額為3，那我們就湊3+(7)
+			}
+		}
+	}
+	return dp[al][mx];
+}
 
 
 
@@ -86,7 +89,7 @@ int main(){
 	while(t--){
 		/*CIN*/
 		INT n=read(INT);
-		cout<<n<<endl;
+		cout<<solve(n,n)<<endl;
 		/*solve*/
 	}
 	return 0;
@@ -99,5 +102,7 @@ int main(){
 
 /*think*/
 /*
-
+假設有1,3,5,......j種$$
+然後要湊出i
+那有幾種湊法?
 */

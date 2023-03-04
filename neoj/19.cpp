@@ -1,17 +1,10 @@
 /*
-[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/ [ID]
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid= [ID]
-[cses]			[Q]https://cses.fi/problemset/task/ [ID]
-[AtCoder]		[Q]https://atcoder.jp/contests/ [ID] /tasks/ [ID] _ [PID]
-[CF]				[Q]
-[ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
-[neoj]			[Q]https://neoj.sprout.tw/problem/ [ID]
-
-[result]		[]
-[time]			[]
-[mem]				[]
-[challenge]	[]
-[sub time]	[YYYY/MM/DD HH:MM:SS]
+[neoj]			[Q]https://neoj.sprout.tw/problem/19
+[result]		[AC]
+[time]			[270]
+[mem]				[7056]
+[challenge]	[230779]
+[sub time]	[2023/03/04 20:11:44]
 */
 
 
@@ -30,6 +23,7 @@
 #include<vector>
 #include<queue>
 #include<deque>
+#include<stack>
 #include<map>
 #include<set>
 #include<cstring>
@@ -86,8 +80,25 @@ int main(){
 	while(t--){
 		/*CIN*/
 		INT n=read(INT);
-		cout<<n<<endl;
+		INT fnl[n];
+		for(INT i=0;i<n;i++){
+			cin>>fnl[i];
+		}
 		/*solve*/
+		INT it=0;
+		stack<INT>st;
+		for(INT i=1;i<=n;i++){
+			st.push(i);
+			while(!st.empty() && it<n && st.top()==fnl[it]){
+				st.pop();
+				it++;
+			}
+		}
+		if(it==n){
+			cout<<"Yes"<<endl;
+		}else{
+			cout<<"No"<<endl;
+		}
 	}
 	return 0;
 }
