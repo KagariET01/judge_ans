@@ -39,7 +39,7 @@
 		{"name": "rerun",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}\\run.exe",
+			"program": "${workspaceFolderBasename}\\run.exe",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
