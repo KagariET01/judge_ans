@@ -5,13 +5,7 @@
 [AtCoder]		[Q]https://atcoder.jp/contests/ [ID] /tasks/ [ID] _ [PID]
 [CF]				[Q]
 [ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
-[neoj]			[Q]https://neoj.sprout.tw/problem/ [ID]
-
-[result]		[]
-[time]			[]
-[mem]				[]
-[challenge]	[]
-[sub time]	[YYYY/MM/DD HH:MM:SS]
+[]
 */
 
 
@@ -73,14 +67,44 @@ template<typename TPE>TPE reader(){
 	return a;
 }
 
-
-struct haha{
-	INT wow[2][2];
-	haha operator*(haha b){
-		haha re;
-		memset(re.wow,0,sizeof(re.wow));
+bool parchecker(
+	string str,
+	map<char,bool> lft={
+		{'(',true},
+		{'<',true},
+		{'[',true},
+		{'{',true}
+	},
+	map<char,char> ltor={
+		{'(',')'},
+		{'<','>'},
+		{'[',']'},
+		{'{','}'}
 	}
-};
+){
+	deque<char> par;
+	for(char c:str){
+
+	}
+}
+
+INT solve(string str){
+	deque<INT> nm;
+	deque<char> par;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -5,13 +5,7 @@
 [AtCoder]		[Q]https://atcoder.jp/contests/ [ID] /tasks/ [ID] _ [PID]
 [CF]				[Q]
 [ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
-[neoj]			[Q]https://neoj.sprout.tw/problem/ [ID]
-
-[result]		[]
-[time]			[]
-[mem]				[]
-[challenge]	[]
-[sub time]	[YYYY/MM/DD HH:MM:SS]
+[]
 */
 
 
@@ -88,11 +82,14 @@ struct haha{
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	INT t=read(INT);
+	INT t=1;
 	while(t--){
 		/*CIN*/
 		INT n=read(INT);
-		cout<<n<<endl;
+		vector<INT> k(n);
+		for(INT i=0;i<n;i++){
+			cin>>k[i];
+		}
 		/*solve*/
 	}
 	return 0;
