@@ -67,14 +67,44 @@ template<typename TPE>TPE reader(){
 	return a;
 }
 
-
-struct haha{
-	INT wow[2][2];
-	haha operator*(haha b){
-		haha re;
-		memset(re.wow,0,sizeof(re.wow));
+bool parchecker(
+	string str,
+	map<char,bool> lft={
+		{'(',true},
+		{'<',true},
+		{'[',true},
+		{'{',true}
+	},
+	map<char,char> ltor={
+		{'(',')'},
+		{'<','>'},
+		{'[',']'},
+		{'{','}'}
 	}
-};
+){
+	deque<char> par;
+	for(char c:str){
+
+	}
+}
+
+INT solve(string str){
+	deque<INT> nm;
+	deque<char> par;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

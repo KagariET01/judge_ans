@@ -82,11 +82,14 @@ struct haha{
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	INT t=read(INT);
+	INT t=1;
 	while(t--){
 		/*CIN*/
 		INT n=read(INT);
-		cout<<n<<endl;
+		vector<INT> k(n);
+		for(INT i=0;i<n;i++){
+			cin>>k[i];
+		}
 		/*solve*/
 	}
 	return 0;
