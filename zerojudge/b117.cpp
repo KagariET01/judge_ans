@@ -1,11 +1,6 @@
 /*
-[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/ [ID]
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid= [ID]
-[cses]			[Q]https://cses.fi/problemset/task/ [ID]
-[AtCoder]		[Q]https://atcoder.jp/contests/ [ID] /tasks/ [ID] _ [PID]
-[CF]				[Q]
-[ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
-[]
+[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=b117
+[AC]
 */
 
 
@@ -56,6 +51,9 @@ using namespace std;
 /*num*/
 bool debug=0;
 bool iofast=true;
+PII mv[]={{0,1},{1,0},{0,-1},{-1,0}};
+INT mx[]={0,1,0,-1};
+INT my[]={1,0,-1,0};
 INT mod=988244353;
 /*fn定義*/
 template<typename TPE>TPE reader(){
@@ -64,83 +62,68 @@ template<typename TPE>TPE reader(){
 	return a;
 }
 
-const INT mxm=1e6;
-INT toroad[mxm+1];
-INT bkroad[mxm+1];
-vector<INT> tre[mxm+1];
-vector<INT> bktre[mxm+1];
-map<PII,INT> lne;
-map<PII,INT> bklne;
+const INT mxn=1e5;
+INT ans=0;
+vector<PII> tre[mxn+1],bktre[mxn+1];//tre[起點][i]={終點,花費}
+INT n,m;
+INT lne[mxn+1];
+
 
 /*main*/
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	INT m,n;
-	while(cin>>m>>n){
-		memset(toroad,-1,sizeof(toroad));
-		memset(bkroad,-1,sizeof(bkroad));
+	while(cin>>n>>m){
+		for(INT i=0;i<=n;i++){
+			tre[i].clear();
+			bktre[i].clear();
+		}
+		for(INT i=0;i<=n;i++){
+			lne[i]=1000000000;
+		}
+		ans=0;
 		/*CIN*/
-		for(INT i=0;i<n;i++){
-			INT p,q,r;
-			cin>>p>>q>>r;
-			tre[p].push_back(q);
-			lne[{p,q}]=r;
-			bktre[q].push_back(p);
-			bklne[{q,p}]=r;
+		for(INT i=0;i<m;i++){
+			INT a,b,c;
+			cin>>a>>b>>c;
+			tre[a].push_back({b,c});
+			bktre[b].push_back({a,c});
 		}
 		/*solve*/
-		toroad[1]=0;
-		deque<INT> dq;
-		dq.push_back(1);
-		bool cansolve=true;
-		while(dq.wassomething()){
-			INT nw=dq.front();
-			dq.pop_front();
-			for(INT i:tre[nw]){
-				INT newroad=toroad[nw]+lne[{nw,i}];
-				if(toroad[i]==-1 || toroad[i]>newroad){
-					toroad[i]=newroad;
-					dq.push_back(i);
+		//出去
+		priority_queue<PII,vector<PII>,greater<PII>>que;//目前路徑最小的會先被拉出來
+		que.push({0,1});//{目前花費,位置}
+		lne[1]=0;
+		while(que.wassomething()){
+			PII nw=que.top();
+			que.pop();
+			if(lne[nw.SEC]!=nw.FIR)continue;//如果紀錄的和現在的不一樣就跳出(根據bfs的特性，跑過的地方數值絕對比較小)
+			ans+=lne[nw.SEC];
+			for(PII i:tre[nw.SEC]){
+				if(lne[i.FIR]>lne[nw.SEC]+i.SEC){//如果從這邊走過去會比原本的方案好，那就加進去
+					lne[i.FIR]=lne[nw.SEC]+i.SEC;
+					que.push({lne[i.FIR],i.FIR});
 				}
 			}
 		}
-
-		INT ans=0;
-		for(INT i=1;i<=m && cansolve;i++){
-			if(toroad[i]==-1)cansolve=false;
-			ans+=toroad[i];
+		//回來
+		for(INT i=0;i<=n;i++){
+			lne[i]=1000000000;
 		}
-		
-		if(!cansolve){
-			cout<<0<<endl;
-			continue;
-		}
-
-		bkroad[1]=0;
-		dq.push_back(1);
-		while(dq.wassomething()){
-			INT nw=dq.front();
-			dq.pop_front();
-			for(INT i:bktre[nw]){
-				INT newroad=bkroad[nw]+lne[{nw,i}];
-				if(bkroad[i]==-1 || bkroad[i]>newroad){
-					bkroad[i]=newroad;
-					dq.push_back(i);
+		lne[1]=0;
+		que.push({0,1});
+		while(que.wassomething()){
+			PII nw=que.top();
+			que.pop();
+			if(lne[nw.SEC]!=nw.FIR)continue;
+			ans+=lne[nw.SEC];
+			for(PII i:bktre[nw.SEC]){
+				if(lne[i.FIR]>lne[nw.SEC]+i.SEC){
+					lne[i.FIR]=lne[nw.SEC]+i.SEC;
+					que.push({lne[i.FIR],i.FIR});
 				}
 			}
 		}
-
-
-		for(INT i=1;i<=m && cansolve;i++){
-			if(bkroad[i]==-1)cansolve=false;
-			ans+=bkroad[i];
-		}
-		if(!cansolve){
-			cout<<0<<endl;
-			continue;
-		}
-
 		cout<<ans<<endl;
 	}
 	return 0;
@@ -148,10 +131,32 @@ int main(){
 
 /*
 [I1]
+[房間數量 n] [道路數量 m]
+{[點1 a] [點2 b] [邊權重 c]}*n
+1<=a,b<=n
 [O1]
+[ans]
+若可以從點1走到其他所有點再走回來
+輸出最短距離
+若不行則輸出0
 */
 
 /*think*/
 /*
+
+使用類bfs和類topological sort和greedy
+
+每次執行時都會優先拿目前路徑最短的工作
+然後往下走
+
+可以證明第一次走到該點時，工作簿上面的路徑即為最短路徑
+然後我不想寫證明，有興趣的幫忙補充謝謝
+
+如果這個工作和紀錄簿上面的"可以最短路"的長度不同
+代表說這點走過了
+這也可以證，但我不想證
+
+根據上面這兩點，就可以寫出這支code了
+詳細的可以直接看code，不然單靠文字是無法描述清楚的
 
 */
