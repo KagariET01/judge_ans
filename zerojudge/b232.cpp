@@ -5,13 +5,7 @@
 [AtCoder]		[Q]https://atcoder.jp/contests/ [ID] /tasks/ [ID] _ [PID]
 [CF]				[Q]
 [ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
-[neoj]			[Q]https://neoj.sprout.tw/problem/ [ID]
-
-[result]		[]
-[time]			[]
-[mem]				[]
-[challenge]	[]
-[sub time]	[YYYY/MM/DD HH:MM:SS]
+[]
 */
 
 
@@ -73,14 +67,24 @@ template<typename TPE>TPE reader(){
 	return a;
 }
 
+const INT mxn=750;
+INT dp[mxn+1][mxn+1];//dp[i][j]    所有數字加起來=i    所有數字全部<=j
 
-struct haha{
-	INT wow[2][2];
-	haha operator*(haha b){
-		haha re;
-		memset(re.wow,0,sizeof(re.wow));
+INT solve(INT nw,INT mx){//nw為總total,mx為目前的
+	if(!dp[nw][mx]){//如果有記錄過，就直接存取紀錄
+		if(!nw){//設定初始值，nw=0的答案為1 (0)
+			dp[nw][mx]=1;
+		}elif(!mx){//如果最大值容許為0，那不可能有答案
+			dp[nw][mx]=0;
+		}elif(mx%2==0){
+			dp[nw][mx]=solve(nw,mx-1);//允許最大值若為偶數，那和mx-1是一樣的，因為不允許偶數
+		}else{
+			dp[nw][mx]=solve(nw,mx-1);//n=1+1+(n-2)
+			if(mx<=nw)dp[nw][mx]+=solve(nw-mx,mx);//
+		}
 	}
-};
+	return dp[nw][mx];
+}
 
 
 
@@ -88,12 +92,11 @@ struct haha{
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	INT t=read(INT);
+	INT t;
+	cin>>t;
 	while(t--){
-		/*CIN*/
 		INT n=read(INT);
-		cout<<n<<endl;
-		/*solve*/
+		cout<<solve(n,n)<<endl;
 	}
 	return 0;
 }
