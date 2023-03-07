@@ -1,11 +1,5 @@
 /*
-[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/ [ID]
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid= [ID]
-[cses]			[Q]https://cses.fi/problemset/task/ [ID]
-[AtCoder]		[Q]https://atcoder.jp/contests/ [ID] /tasks/ [ID] _ [PID]
-[CF]				[Q]
-[ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
-[neoj]			[Q]https://neoj.sprout.tw/problem/ [ID]
+[neoj]			[Q]https://neoj.sprout.tw/problem/20
 
 [result]		[]
 [time]			[]
@@ -73,16 +67,26 @@ template<typename TPE>TPE reader(){
 	return a;
 }
 
+INT mxp=1e6;
+
 /*main*/
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
 	INT t=read(INT);
-	while(t--){
+	for(INT rt=1;rt<=t;rt++){
+		cout<<"Line #"<<rt<<endl;
 		/*CIN*/
 		INT n=read(INT);
-		cout<<n<<endl;
-		/*solve*/
+		INT pgp[mxp+1];
+		set0(pgp);
+		for(INT i=1;i<=n;i++){
+			INT j=read(INT);
+			while(j--){
+				pgp[read(INT)]=i;
+			}
+		}
+		deque<INT> gdq[n+1];
 	}
 	return 0;
 }
