@@ -1,6 +1,7 @@
 /*
 [zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=g555
-[]
+[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid=g556
+[AC]
 */
 
 
@@ -51,6 +52,7 @@ using namespace std;
 /*num*/
 bool debug=0;
 bool iofast=true;
+INT mod=998244353;
 /*fn定義*/
 template<typename TPE>TPE reader(){
 	TPE a;
@@ -59,10 +61,42 @@ template<typename TPE>TPE reader(){
 }
 
 struct bck{
-	INT a[2][2];
+	INT a[3][3]={{1,1,1},{1,1,1},{1,1,1}};
+	bck operator*(const bck b){
+		bck re;
+		memset(re.a,0,sizeof(re.a));
+		for(INT i=0;i<3;i++){
+			for(INT j=0;j<3;j++){
+				for(INT k=0;k<3;k++){
+					re.a[i][j]+=(a[i][k]*b.a[k][j])%mod;
+				}
+			}
+		}
+		return re;
+	}
 };
 
-
+template<typename TPE>TPE ETpow(TPE n,INT m){
+	//cerr<<m<<"="<<endl;
+	TPE re=n;
+	m--;
+	TPE nw=n;
+	
+	while(m){
+		if(m & 1){	
+			re=re*nw;
+		}
+		nw=nw*nw;
+		m>>=1;
+	}
+			// for(INT i=0;i<3;i++){
+			// 	for(INT j=0;j<3;j++){
+			// 		cerr<<re.a[i][j]<<",";
+			// 	}
+			// 	cerr<<endl;
+			// }
+	return re;
+}
 
 
 /*main*/
@@ -70,10 +104,29 @@ int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
 	INT t=read(INT);
+	bck fst;
+	memset(fst.a,0,sizeof(fst.a));
+	fst.a[0][0]=1;
+	fst.a[0][1]=1;
+	fst.a[0][2]=2;
+	bck xx;
+	memset(xx.a,0,sizeof(xx.a));
+	xx.a[0][0]=1;
+	xx.a[2][1]=1;
+	xx.a[0][2]=1;
+	xx.a[1][2]=1;
+	xx.a[2][2]=1;
 	while(t--){
 		/*CIN*/
 		INT n=read(INT);
-		cout<<n<<endl;
+		if(n==1){
+			cout<<"1"<<endl;
+		}elif(n==2){
+			cout<<"2"<<endl;
+		}else{
+			bck ans=fst*ETpow(xx,n-2);
+			cout<<ans.a[0][2]%mod<<endl;
+		}
 		/*solve*/
 	}
 	return 0;
