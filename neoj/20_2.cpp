@@ -1,11 +1,11 @@
 /*
 [neoj]			[Q]https://neoj.sprout.tw/problem/20
 
-[result]		[]
-[time]			[]
-[mem]				[]
-[challenge]	[]
-[sub time]	[YYYY/MM/DD HH:MM:SS]
+[result]		[AC]
+[time]			[1000]
+[mem]				[34744]
+[challenge]	[231728]
+[sub time]	[2023/03/07 19:58:26]
 */
 
 
@@ -87,6 +87,32 @@ int main(){
 			}
 		}
 		deque<INT> gdq[n+1];
+		INT m=read(INT);
+		deque<INT> alldq;
+		while(m--){
+			if(read(string)=="ENQUEUE"){
+				INT inin=read(INT);
+				if(pgp[inin]==0){
+					alldq.push_back(-inin);
+				}else{
+					if(gdq[pgp[inin]].empty()){
+						alldq.push_back(pgp[inin]);
+					}
+					gdq[pgp[inin]].push_back(inin);
+				}
+			}else{
+				if(alldq.front()<0){
+					cout<<-alldq.front()<<endl;
+					alldq.pop_front();
+				}else{
+					cout<<gdq[alldq.front()].front()<<endl;
+					gdq[alldq.front()].pop_front();
+					if(gdq[alldq.front()].empty()){
+						alldq.pop_front();
+					}
+				}
+			}
+		}
 	}
 	return 0;
 }

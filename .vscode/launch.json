@@ -4,8 +4,21 @@
 	// 如需詳細資訊，請瀏覽: https://go.microsoft.com/fwlink/?linkid=830387
 	"version": "0.2.0",
 	"configurations": [
+		{
+			"name": "[Linux] gdb",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/run",
+			"args": [],
+			"stopAtEntry": false,
+			"cwd": "${fileDirname}",
+			"environment": [],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"preLaunchTask": "linux_gdb"
+		},
 		{"name":"Python: 目前的檔案","type":"python","request":"launch","program":"${file}","console":"integratedTerminal","justMyCode":true},
-		{"name": "gdb",
+		{"name": "[WIN]gdb",
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}\\run.exe",
@@ -19,13 +32,12 @@
 			"setupCommands": [
 				{
 					"description": "啟用 gdb 的美化顯示",
-					"text": "-enable-pretty-printing",
-					"ignoreFailures": true
+					"text": "-enable-pretty-printing"
 				}
 			],
-			"preLaunchTask": "dbg this cpp file"
+			"preLaunchTask": "win_gdb"
 		},
-		{"name": "g++",
+		{"name": "[WIN]g++",
 			"type":"cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}\\run.exe",
@@ -34,9 +46,9 @@
 			"cwd": "${workspaceFolder}",
 			"environment": [],
 			"externalConsole": false,
-			"preLaunchTask": "build this cpp file"
+			"preLaunchTask": "win_g++"
 		},
-		{"name": "rerun",
+		{"name": "[WIN]rerun",
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolderBasename}\\run.exe",
@@ -50,8 +62,7 @@
 			"setupCommands": [
 				{
 					"description": "啟用 gdb 的美化顯示",
-					"text": "-enable-pretty-printing",
-					"ignoreFailures": true
+					"text": "-enable-pretty-printing"
 				}
 			],
 		}
