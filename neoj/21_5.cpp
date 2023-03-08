@@ -7,13 +7,13 @@
 [ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
 [neoj]			[Q]https://neoj.sprout.tw/problem/ [ID]
 
-[暴力解+structe優化(???)+list優化(?????)]
+[]
 
-[result]		[]
-[time]			[]
-[mem]				[]
-[challenge]	[]
-[sub time]	[YYYY/MM/DD HH:MM:SS]
+[result]		[RE]
+[time]			[20]
+[mem]				[8880]
+[challenge]	[232150]
+[sub time]	[2023/03/09 00:58:37]
 */
 
 
@@ -43,7 +43,7 @@ using namespace std;
 #define what_the_fuck cin.tie(0);cout.tie(0);ios::sync_with_stdio(false)
 #define ULLI unsigned long long int
 #define LLI long long int
-#define INT int
+#define INT LLI
 #define UINT unsigned INT
 #define PII pair<INT,INT>
 #define PUIUI pair<UINT,UINT>
@@ -63,7 +63,11 @@ using namespace std;
 #define ADloop(i,s,n,ad) for(i=s;i<n;i+=ad)
 /*num*/
 bool debug=0;
-bool iofast=true;	
+bool iofast=1;
+PII mv[]={{0,1},{1,0},{0,-1},{-1,0}};
+INT mx[]={0,1,0,-1};
+INT my[]={1,0,-1,0};
+INT mod=988244353;
 /*fn定義*/
 template<typename TPE>TPE reader(){
 	TPE a;
@@ -71,14 +75,16 @@ template<typename TPE>TPE reader(){
 	return a;
 }
 
-struct node{
-	INT pID=0;
-	node *l,*r;
-	node(){
+struct lklst{
+	INT n=0;
+	lklst *l,*r;
+	lklst(){
 		l=NULL;
 		r=NULL;
 	}
 };
+
+
 
 /*main*/
 int main(){
@@ -87,42 +93,87 @@ int main(){
 	INT n;
 	while(cin>>n){
 		/*CIN*/
-		INT m=read(INT);
-		vector<PII> todo(m);
-		for(INT i=0;i<m;i++){
-			todo[i]={read(INT),read(INT)};
-		}
-		/*set*/
-		INT ap[n+2];
+		//INT n=read(INT);
+		lklst rk[n+2];
 		for(INT i=1;i<=n;i++){
-			(ap[i]).pID=i;
-			if(1<i){
-				ap[i].l=&(ap[i-1]);
-			}
-			if(i<n){
-				ap[i].r=&(ap[i+1]);
-			}
+			(rk[i]).n=i;
+				(rk[i]).l=&(rk[i-1]);
+				(rk[i]).r=&(rk[i+1]);
 		}
+		(rk[1]).l=NULL;
+		(rk[n]).r=NULL;
 		/*solve*/
-		for(PII i:todo){
-			if(i.FIR){//衝刺
-				INT inin=i.SEC;
-				if((ap[inin]).l==NULL)continue;
-				node *nxt=((ap[inin]).l);
-			}else{//kill
-				INT inin=i.SEC;
+		INT m=read(INT);
+		while(m--){
+			INT a,b;
+			cin>>a>>b;
+			if(a){
+				lklst &nw=rk[b];
+				if(nw.l==NULL)continue;
+				lklst &nxt=*(nw.l);
+					lklst &dtar=*(nw.r);
+					lklst &dtal=*(nxt.l);
+				if(nxt.l!=NULL){
+					dtal.r=&nw;
+				}
+				if(nw.r!=NULL){
+					dtar.l=&nxt;
+				}
+				nw.l=(nxt.l);
+				nxt.r=nw.r;
+				nw.r=&nxt;
+				nxt.l=&nw;
+			}else{
+				lklst &nw=rk[b];
+					lklst &dtal=*(nw.l);
+					lklst &dtar=*(nw.r);
+				if(nw.l!=NULL){
+					dtal.r=nw.r;
+				}
+				if(nw.r!=NULL){
+					dtar.	l=nw.l;
+				}
+				nw.n=0;
 			}
 		}
-		bool outer=false;
-		for(){
+		lklst *bgn=&(rk[1]);
+		while(true){
+			bgn=(*bgn).l;
+			if((*bgn).l==NULL)break;
+		}
+		bool ot=false;
+		while(true){
+			if(ot)cout<<" ";
+			ot=true;
+			cout<<(*(bgn)).n;
+			if((*(bgn)).r==NULL)break;
+			bgn=(*bgn).r;
 		}
 		cout<<endl;
+
+		DBG{
+			for(INT i=1;i<=n;i++){
+				if((rk[i]).l==NULL){
+					cerr<<"<";
+				}
+				cerr<<(rk[i]).n;
+				if((rk[i]).r==NULL){
+					cerr<<">";
+				}
+
+				cerr<<" ";
+			}
+			cerr<<endl;
+		}
+
+
 	}
 	return 0;
 }
 
 /*
 [I1]
+7 9 0 6 1 3 1 5 0 7 1 1 1 5 1 3 1 2 0 2
 [O1]
 */
 
