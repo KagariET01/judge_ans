@@ -2,11 +2,11 @@
 	"tasks": [
 		{
 			"type": "cppbuild",
-			"label": "dbg this cpp file",
+			"label": "win_gdb",
 			"command": "g++",
 			"args": [
 				"-o",
-				"${workspaceFolder}\\run.exe",
+				"${workspaceFolder}\\run",
 				"${file}",
 				"-g"
 			],
@@ -22,12 +22,32 @@
 		},
 		{
 			"type": "cppbuild",
-			"label": "build this cpp file",
+			"label": "win_g++",
 			"command": "g++",
 			"args": [
 				"-o",
-				"${workspaceFolder}\\run.exe",
+				"${workspaceFolder}\\run",
 				"${file}",
+			],
+			"options": {
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "none",
+				"isDefault": true
+			}
+		},
+		{
+			"type": "cppbuild",
+			"label": "linux_gdb",
+			"command": "g++",
+			"args": [
+				"-o",
+				"${workspaceFolder}/run",
+				"${file}",
+				"-g"
 			],
 			"options": {
 			},

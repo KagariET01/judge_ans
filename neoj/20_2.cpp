@@ -1,19 +1,11 @@
 /*
-[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/ [ID]
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid= [ID]
-[cses]			[Q]https://cses.fi/problemset/task/ [ID]
-[AtCoder]		[Q]https://atcoder.jp/contests/ [ID] /tasks/ [ID] _ [PID]
-[CF]				[Q]
-[ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
-[neoj]			[Q]https://neoj.sprout.tw/problem/ [ID]
+[neoj]			[Q]https://neoj.sprout.tw/problem/20
 
-[]
-
-[result]		[]
-[time]			[]
-[mem]				[]
-[challenge]	[]
-[sub time]	[YYYY/MM/DD HH:MM:SS]
+[result]		[AC]
+[time]			[1000]
+[mem]				[34744]
+[challenge]	[231728]
+[sub time]	[2023/03/07 19:58:26]
 */
 
 
@@ -75,20 +67,52 @@ template<typename TPE>TPE reader(){
 	return a;
 }
 
-
-
-
+INT mxp=1e6;
 
 /*main*/
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
 	INT t=read(INT);
-	while(t--){
+	for(INT rt=1;rt<=t;rt++){
+		cout<<"Line #"<<rt<<endl;
 		/*CIN*/
 		INT n=read(INT);
-		cout<<n<<endl;
-		/*solve*/
+		INT pgp[mxp+1];
+		set0(pgp);
+		for(INT i=1;i<=n;i++){
+			INT j=read(INT);
+			while(j--){
+				pgp[read(INT)]=i;
+			}
+		}
+		deque<INT> gdq[n+1];
+		INT m=read(INT);
+		deque<INT> alldq;
+		while(m--){
+			if(read(string)=="ENQUEUE"){
+				INT inin=read(INT);
+				if(pgp[inin]==0){
+					alldq.push_back(-inin);
+				}else{
+					if(gdq[pgp[inin]].empty()){
+						alldq.push_back(pgp[inin]);
+					}
+					gdq[pgp[inin]].push_back(inin);
+				}
+			}else{
+				if(alldq.front()<0){
+					cout<<-alldq.front()<<endl;
+					alldq.pop_front();
+				}else{
+					cout<<gdq[alldq.front()].front()<<endl;
+					gdq[alldq.front()].pop_front();
+					if(gdq[alldq.front()].empty()){
+						alldq.pop_front();
+					}
+				}
+			}
+		}
 	}
 	return 0;
 }
