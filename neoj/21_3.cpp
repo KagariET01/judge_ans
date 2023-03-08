@@ -116,12 +116,13 @@ int main(){
 			}
 		}
 		bool outer=false;
-		for(INT i:que){
+		while(!que.empty()){
 			if(outer){
 				cout<<" ";
 			}
 			outer=true;
-			cout<<i;
+			cout<<que.front();
+			que.pop_front();
 		}
 		cout<<endl;
 	}
