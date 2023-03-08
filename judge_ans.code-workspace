@@ -10,7 +10,8 @@
 			"span": "cpp",
 			"type_traits": "cpp",
 			"iostream": "cpp",
-			"algorithm": "cpp"
+			"algorithm": "cpp",
+			"xutility": "cpp"
 		}
 	}
 }

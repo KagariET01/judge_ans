@@ -7,7 +7,7 @@
 [ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
 [neoj]			[Q]https://neoj.sprout.tw/problem/ [ID]
 
-[]
+[暴力解]
 
 [result]		[]
 [time]			[]
@@ -63,7 +63,7 @@ using namespace std;
 #define ADloop(i,s,n,ad) for(i=s;i<n;i+=ad)
 /*num*/
 bool debug=0;
-bool iofast=true;
+bool iofast=true;	
 PII mv[]={{0,1},{1,0},{0,-1},{-1,0}};
 INT mx[]={0,1,0,-1};
 INT my[]={1,0,-1,0};
@@ -79,12 +79,27 @@ template<typename TPE>TPE reader(){
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	INT t=read(INT);
+	INT t=1;
 	while(t--){
 		/*CIN*/
 		INT n=read(INT);
-		cout<<n<<endl;
+		vector<INT> ranking(n+1);
+		ranking[0]=0;
+		for(INT i=1;i<=n;i++){
+			ranking[i]=i;
+		}
 		/*solve*/
+		INT m=read(INT);
+		while(m--){
+			if(read(INT)){//衝刺
+				INT inin=read(INT);
+				vector<INT>::iterator it=find(ranking.begin(),ranking.end(),inin);
+				vector<INT>::iterator it2=it-1;
+				swap(it,it2);
+			}else{
+				ranking.erase(find(ranking.begin(),ranking.end(),read(INT)));
+			}
+		}
 	}
 	return 0;
 }

@@ -7,7 +7,7 @@
 [ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
 [neoj]			[Q]https://neoj.sprout.tw/problem/ [ID]
 
-[]
+[暴力解+structe優化(???)+list優化(?????)]
 
 [result]		[]
 [time]			[]
@@ -43,7 +43,7 @@ using namespace std;
 #define what_the_fuck cin.tie(0);cout.tie(0);ios::sync_with_stdio(false)
 #define ULLI unsigned long long int
 #define LLI long long int
-#define INT LLI
+#define INT int
 #define UINT unsigned INT
 #define PII pair<INT,INT>
 #define PUIUI pair<UINT,UINT>
@@ -63,11 +63,7 @@ using namespace std;
 #define ADloop(i,s,n,ad) for(i=s;i<n;i+=ad)
 /*num*/
 bool debug=0;
-bool iofast=true;
-PII mv[]={{0,1},{1,0},{0,-1},{-1,0}};
-INT mx[]={0,1,0,-1};
-INT my[]={1,0,-1,0};
-INT mod=988244353;
+bool iofast=true;	
 /*fn定義*/
 template<typename TPE>TPE reader(){
 	TPE a;
@@ -75,16 +71,54 @@ template<typename TPE>TPE reader(){
 	return a;
 }
 
+struct node{
+	INT pID=0;
+	node *l,*r;
+	node(){
+		l=NULL;
+		r=NULL;
+	}
+};
+
 /*main*/
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
-	INT t=read(INT);
-	while(t--){
+	INT n;
+	while(cin>>n){
 		/*CIN*/
-		INT n=read(INT);
-		cout<<n<<endl;
+		INT m=read(INT);
+		vector<PII> todo(m);
+		for(INT i=0;i<m;i++){
+			todo[i]={read(INT),read(INT)};
+		}
+		/*set*/
+		INT ap[n+2];
+		for(INT i=1;i<=n;i++){
+			ap[i].pID=i;
+			if(1<i){
+				ap[i].l=&(ap[i-1]);
+			}
+			if(i<n){
+				ap[i].r=&(ap[i+1]);
+			}
+		}
 		/*solve*/
+		for(PII i:todo){
+			if(i.FIR){//衝刺
+				INT inin=i.SEC;
+				if((ap[inin]).l==NULL)continue;
+				node *nxt=((ap[inin]).l);
+			}else{//kill
+				INT inin=i.SEC;
+				((ap[inin]).l).r=(ap[inin]).r;
+				((ap[inin]).r).l=(ap[inin]).l;
+			}
+		}
+		bool outer=false;
+		for(){
+		}
+		cout<<endl;
 	}
 	return 0;
 }
