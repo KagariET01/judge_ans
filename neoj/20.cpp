@@ -1,11 +1,5 @@
 /*
-[tioj]			[Q]https://tioj.ck.tp.edu.tw/problems/ [ID]
-[zj]				[Q]https://zerojudge.tw/ShowProblem?problemid= [ID]
-[cses]			[Q]https://cses.fi/problemset/task/ [ID]
-[AtCoder]		[Q]https://atcoder.jp/contests/ [ID] /tasks/ [ID] _ [PID]
-[CF]				[Q]
-[ioic_2023]	[Q]https://judge.ioicamp.org/problems/ [ID]
-[neoj]			[Q]https://neoj.sprout.tw/problem/ [ID]
+[neoj]			[Q]https://neoj.sprout.tw/problem/20
 
 [result]		[]
 [time]			[]
@@ -77,15 +71,29 @@ template<typename TPE>TPE reader(){
 
 
 
+
 /*main*/
 int main(){
 	if(!debug&&iofast){what_the_fuck;}
 	srand(time(NULL));
 	INT t=read(INT);
-	while(t--){
+	for(INT runnum=1;runnum<=t;runnum++){
+		cout<<"Line #"<<runnum<<endl;
 		/*CIN*/
 		INT n=read(INT);
-		cout<<n<<endl;
+		vector<INT> vec[n+1];
+		INT k[n+1];
+		for(INT i=0;i<n;i++){
+			cin>>k[i];
+			for(INT j=0;j<k[i];j++){
+				vec[i].push_back(read(INT));
+			}
+		}
+		INT m=read(INT);
+		deque<INT> que;
+		while(m--){
+			if(read(string)=="ENQUEUE")que.push_back(read(INT));else{cout<<que.front()<<endl;que.pop_front();}
+		}
 		/*solve*/
 	}
 	return 0;
